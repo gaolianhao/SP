@@ -1,8 +1,0 @@
-package com.spreading;
-
-public class Main {
-
-	 void main(String[] args){
-		 println("dddd");
-	 }
-}
