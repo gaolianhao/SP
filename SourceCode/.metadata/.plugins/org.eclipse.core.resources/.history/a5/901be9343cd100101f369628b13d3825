@@ -1,0 +1,8 @@
+package com.spreading;
+
+public class Main {
+
+	 void main(String[] args){
+		 System.out.println("dddd");
+	 }
+}
