@@ -1,10 +1,12 @@
 package com.netmessenger.recipient;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,6 +56,7 @@ public class RecipientInfoDAO {
 	public List<RecipientInfo> getRecipients(){
 		return recipientList;
 	}
+	
 	public void save() {
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -81,8 +84,11 @@ public class RecipientInfoDAO {
 			
 			File file = new File(storeFileFullName());
 			if(!file.exists()) file.createNewFile();
-			OutputStream output = new FileOutputStream(storeFileFullName());
-			StreamResult result = new StreamResult(output);
+			OutputStream fout = new FileOutputStream(storeFileFullName());
+			OutputStream bout = new BufferedOutputStream(fout);
+			OutputStreamWriter out = new OutputStreamWriter(bout, "UTF-8");
+			
+			StreamResult result = new StreamResult(out);
 			transformer.transform(source, result);
 	 
 			System.out.println("File saved at " + storeFileFullName());
@@ -116,6 +122,7 @@ public class RecipientInfoDAO {
 				NamedNodeMap attributes = node.getAttributes();
 				RecipientInfo recipientInfo = buildRecipientInfo(attributes);
 				recipientList.add(recipientInfo);
+				map.put(recipientInfo.getHomePage(),recipientInfo);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

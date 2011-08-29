@@ -10,7 +10,12 @@ class LiteWebDriver (driver : WebDriver) {
     driver.findElement(By.xpath(xpath)).click();
     Thread.sleep(1000);
   }
-  
+
+  def click(ele:WebElement):Unit = {
+    ele.click();
+    Thread.sleep(1000);
+  }
+
   def findElements(xpath:String):List[WebElement] = {
      return driver.findElements(By.xpath(xpath)).toList;
   }

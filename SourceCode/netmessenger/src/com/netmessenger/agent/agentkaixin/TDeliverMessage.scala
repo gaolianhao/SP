@@ -27,7 +27,7 @@ trait TDeliverMessage extends TCommon{
   }
   
   private def sendMessage(driver: LiteWebDriver,recipientInfo:RecipientInfo, message: IMessage): Unit = {
-    retriableDo(driver, () => {
+    safelyRetriableDo(driver, () => {
       driver.goto(recipientInfo.getHomePage());
       driver.click("//a[text()='发短消息']");
       driver.input("//div[@id='content_div']/textarea", message.getContent());

@@ -17,14 +17,14 @@ class AgentRenren(name: String) extends Agent(name) {
   override def deliverMessage(message: IMessage) = {
     val driver = new LiteWebDriver(new FirefoxDriver());
     // step1
-    retriableDo(driver, () => { login(driver) });
+    safelyRetriableDo(driver, () => { login(driver) });
 
     // step2
     val friendList = driver.findElements("//ul[@class='people-list']//span[@class='headpichold']/a");
     var recipientNum = 0;
     var friendListSize = friendList.size;
     for (i <- 0 until friendListSize) {
-      var isSendout = retriableDo(driver, () => { sendMessageToOneRecipient(driver, i, message) }).asInstanceOf[Boolean];
+      var isSendout = safelyRetriableDo(driver, () => { sendMessageToOneRecipient(driver, i, message) }).asInstanceOf[Boolean];
       if (isSendout) recipientNum = recipientNum + 1;
     }
 
