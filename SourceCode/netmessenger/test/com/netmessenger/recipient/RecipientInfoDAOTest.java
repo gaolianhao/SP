@@ -67,7 +67,7 @@ public class RecipientInfoDAOTest {
 	class AgentTest extends Agent{
 
 		public AgentTest(String name) {
-			super(name);
+			super(name, null);
 		}
 
 		@Override
@@ -77,7 +77,7 @@ public class RecipientInfoDAOTest {
 		}
 
 		@Override
-		public void findAndSaveRecipientInfo() {
+		public void fuelAgent() {
 			// TODO Auto-generated method stub
 			
 		}

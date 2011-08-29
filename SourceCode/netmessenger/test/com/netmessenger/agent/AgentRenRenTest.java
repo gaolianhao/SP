@@ -11,7 +11,7 @@ public class AgentRenRenTest {
 
 	@Test
 	public void test() {
-		AgentRenren agentRenren = new AgentRenren("renren");
+		AgentRenren agentRenren = new AgentRenren("renren", null);
 		Message message = new Message
 				(RecipientAge.ALL,
 				RecipientJob.ALL,

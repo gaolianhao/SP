@@ -26,7 +26,7 @@ public class AgentManagerTest {
 class AgentTest extends Agent{
 
 	public AgentTest(String name) {
-		super(name);
+		super(name, null);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -35,10 +35,9 @@ class AgentTest extends Agent{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public void findAndSaveRecipientInfo() {
-		// TODO Auto-generated method stub
+	public void fuelAgent() {
 		
 	}
 	
