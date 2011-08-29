@@ -26,17 +26,16 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.netmessenger.core.IAgent;
 import com.netmessenger.core.recipientprofile.RecipientGender;
 
 public class RecipientInfoDAO {
 
 	private LinkedList<RecipientInfo> recipientList = new LinkedList< RecipientInfo>();
 	private HashMap<String, RecipientInfo> map = new HashMap<String, RecipientInfo>();
-	private IAgent agent;
+	private String agentName;
 
-	public RecipientInfoDAO(IAgent agent) {
-		this.agent = agent;
+	public RecipientInfoDAO(String agentName) {
+		this.agentName = agentName;
 		readData();
 	}
 	
@@ -121,7 +120,7 @@ public class RecipientInfoDAO {
 	}
 
 	public String storeFileFullName() {
-		return this.getClass().getResource("/").getPath() + "recipients_of_" + agent.getName() + ".xml";		 
+		return this.getClass().getResource("/").getPath() + "recipients_of_" + agentName + ".xml";		 
 	}
 
 	private RecipientInfo buildRecipientInfo(NamedNodeMap attributes) throws Exception {

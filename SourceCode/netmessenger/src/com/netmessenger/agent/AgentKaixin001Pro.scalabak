@@ -15,7 +15,7 @@ import com.netmessenger.recipient.RecipientInfoDAO
  * a smarter agent that can identify user profile
  *
  */
-class AgentKaixin001Pro(name: String, dao: RecipientInfoDAO) extends Agent(name, dao) {
+class AgentKaixin001Pro(name: String) extends Agent(name) {
 
   override def deliverMessage(message: IMessage) = {
     val driver = new FirefoxDriver();

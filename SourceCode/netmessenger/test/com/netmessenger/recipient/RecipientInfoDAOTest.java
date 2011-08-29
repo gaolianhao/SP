@@ -15,14 +15,14 @@ public class RecipientInfoDAOTest {
 
 	@Before
 	public void clearRecipientInfo(){
-		RecipientInfoDAO recipientInfoDAO = new RecipientInfoDAO(new AgentTest("kaixin001"));
+		RecipientInfoDAO recipientInfoDAO = new RecipientInfoDAO("kaixin001");
 		File file = new File(recipientInfoDAO.storeFileFullName());
 		if(file.exists()) file.delete();
 	}
 	
 	@Test
 	public void testSaveOneRecipientInfo() {
-		RecipientInfoDAO recipientInfoDAO = new RecipientInfoDAO(new AgentTest("kaixin001"));
+		RecipientInfoDAO recipientInfoDAO = new RecipientInfoDAO("kaixin001");
 		RecipientInfo recipientInfo = new RecipientInfo();
 		recipientInfo.gender = RecipientGender.MALE;
 		recipientInfo.name = "John";
@@ -30,7 +30,7 @@ public class RecipientInfoDAOTest {
 		recipientInfoDAO.add(recipientInfo);
 		recipientInfoDAO.save();
 		
-		recipientInfoDAO = new RecipientInfoDAO(new AgentTest("kaixin001"));
+		recipientInfoDAO = new RecipientInfoDAO("kaixin001");
 		List<RecipientInfo> recipients = recipientInfoDAO.getRecipientInfoList();
 		
 		Assert.assertNotNull(recipients);
@@ -42,7 +42,7 @@ public class RecipientInfoDAOTest {
 
 	@Test
 	public void testSaveMultiRecipientInfo() {
-		RecipientInfoDAO recipientInfoDAO = new RecipientInfoDAO(new AgentTest("kaixin001"));
+		RecipientInfoDAO recipientInfoDAO = new RecipientInfoDAO("kaixin001");
 		RecipientInfo recipientInfo = new RecipientInfo();
 		recipientInfo.gender = RecipientGender.MALE;
 		recipientInfo.name = "John";
@@ -57,30 +57,11 @@ public class RecipientInfoDAOTest {
 
 		recipientInfoDAO.save();
 		
-		recipientInfoDAO = new RecipientInfoDAO(new AgentTest("kaixin001"));
+		recipientInfoDAO = new RecipientInfoDAO("kaixin001");
 		List<RecipientInfo> recipients = recipientInfoDAO.getRecipientInfoList();
 		
 		Assert.assertNotNull(recipients);
 		Assert.assertEquals(2, recipients.size());
 	}
 	
-	class AgentTest extends Agent{
-
-		public AgentTest(String name) {
-			super(name, null);
-		}
-
-		@Override
-		public void deliverMessage(IMessage message) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void fuelAgent() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 }

@@ -12,7 +12,7 @@ import com.netmessenger.core.recipientprofile.RecipientGender
 import com.netmessenger.core.recipientprofile.RecipientJob;
 import com.netmessenger.recipient.RecipientInfoDAO
 
-class AgentRenren(name: String, dao: RecipientInfoDAO) extends Agent(name, dao) {
+class AgentRenren(name: String) extends Agent(name) {
 
   override def deliverMessage(message: IMessage) = {
     val driver = new FirefoxDriver();

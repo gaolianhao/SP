@@ -1,46 +1,21 @@
-package com.netmessenger.agent;
+package com.netmessenger.agent.agentkaixin
+import org.openqa.selenium.WebDriver
+import com.netmessenger.core.IMessage
+import org.openqa.selenium.By
+import com.netmessenger.agent.agentkaixin.TCommon
+import org.openqa.selenium.firefox.FirefoxDriver
 
-import java.util.List;
+trait TDeliverMessage extends TCommon{
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
-import com.netmessenger.core.IMessage;
-import com.netmessenger.recipient.RecipientInfoDAO;
-
-class AgentKaixin001(name: String, dao: RecipientInfoDAO) extends Agent(name, dao) {
-
-  override def deliverMessage(message: IMessage) {
+   def deliverMessage(message: IMessage): Unit = {
     val driver = new FirefoxDriver();
-
-    // step1
-    retriableDo(driver, () => { login(driver) });
-
-    // step2
+    login(driver);
     retriableDo(driver, () => { gotoSendMessagePage(driver) });
 
-    // step3
     var recipientNum = retriableDo(driver, () => { sendMessage(driver, message) }).asInstanceOf[Int];
 
-    // step4
     retriableDo(driver, () => { taskReport(driver, recipientNum) });
-
     driver.quit();
-
-  }
-
-  def login(driver: WebDriver): Unit = {
-    driver.get("http://www.kaixin001.com/");
-    val username = driver.findElement(By.name("email"));
-    username.clear();
-    username.sendKeys("liano_x@sohu.com");
-    val password = driver.findElement(By.name("password"));
-    password.sendKeys("19811011");
-    val submitBt = driver.findElement(By.id("btn_dl"));
-    submitBt.click();
-    Thread.sleep(3000);
   }
 
   def gotoSendMessagePage(driver: WebDriver): Unit = {
@@ -83,9 +58,5 @@ class AgentKaixin001(name: String, dao: RecipientInfoDAO) extends Agent(name, da
       System.out.println("Message sent out to " + recipientNum
         + " people");
     }
-  }
-
-  override def fuelAgent = {
-
   }
 }

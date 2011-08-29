@@ -26,7 +26,7 @@ public class AgentManagerTest {
 class AgentTest extends Agent{
 
 	public AgentTest(String name) {
-		super(name, null);
+		super(name);
 		// TODO Auto-generated constructor stub
 	}
 
