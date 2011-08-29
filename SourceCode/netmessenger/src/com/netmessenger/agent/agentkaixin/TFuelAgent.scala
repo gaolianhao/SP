@@ -12,7 +12,7 @@ trait TFuelAgent extends TCommon {
   def fuelAgent(dao : RecipientInfoDAO) = {
     val driver = new SmartWebDriver(new FirefoxDriver());
     login(driver);
-    grabIndepthFriends(driver, dao, 0, 2, Set());
+    grabIndepthFriends(driver, dao, 0, 2, Set(driver.currentUrl));
     //grabFirstLevelFriends(driver, dao, 0);
     System.out.println("Now you have " + dao.getRecipients().size() + " customers in total");
     dao.save();
