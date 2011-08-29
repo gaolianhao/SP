@@ -7,9 +7,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.netmessenger.core.IAgent;
+import com.netmessenger.core.IAgentManager;
+import com.netmessenger.core.IMessage;
+import com.netmessenger.core.IMessageManager;
+import com.netmessenger.ioccontainer.IocContainer;
+
 public class Main {
 
-	 public static void main(String[] args){
+	public static void main(String[] args){
+		IAgentManager agentManager = IocContainer.INSTANCE.getAgentManager();
+		IMessageManager messageManager = IocContainer.INSTANCE.getMessageManager(); 
+		IMessage message = messageManager.findMessage();
+		IAgent agent = agentManager.findAgent(message);
+		agent.deliverMessage(message);
+	}
+	
+	 public static void main2(String[] args){
 		 System.out.println("dddd");
 		 
 		// The Firefox driver supports javascript 
