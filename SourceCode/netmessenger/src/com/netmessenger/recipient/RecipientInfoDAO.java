@@ -51,6 +51,9 @@ public class RecipientInfoDAO {
 		map.put(recipientInfo.homePage, recipientInfo);
 	}
 	
+	public List<RecipientInfo> getRecipients(){
+		return recipientList;
+	}
 	public void save() {
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

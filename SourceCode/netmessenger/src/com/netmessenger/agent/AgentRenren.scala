@@ -15,14 +15,14 @@ import com.netmessenger.recipient.RecipientInfoDAO
 class AgentRenren(name: String) extends Agent(name) {
 
   override def deliverMessage(message: IMessage) = {
-    val driver = new FirefoxDriver();
+    val driver = new LiteWebDriver(new FirefoxDriver());
     // step1
     retriableDo(driver, () => { login(driver) });
 
     // step2
-    val friendList = driver.findElements(By.xpath("//ul[@class='people-list']//span[@class='headpichold']/a"));
+    val friendList = driver.findElements("//ul[@class='people-list']//span[@class='headpichold']/a");
     var recipientNum = 0;
-    var friendListSize = friendList.size();
+    var friendListSize = friendList.size;
     for (i <- 0 until friendListSize) {
       var isSendout = retriableDo(driver, () => { sendMessageToOneRecipient(driver, i, message) }).asInstanceOf[Boolean];
       if (isSendout) recipientNum = recipientNum + 1;
@@ -36,56 +36,48 @@ class AgentRenren(name: String) extends Agent(name) {
 
   }
 
-  def login(driver: WebDriver): Unit = {
-    driver.get("http://www.renren.com/");
-    val username = driver.findElement(By.id("email"));
-    username.clear();
-    username.sendKeys("gaolianhao@sohu.com");
-    val password = driver.findElement(By.id("password"));
-    password.sendKeys("19811011");
-    val submitBt = driver.findElement(By.id("login"));
-    submitBt.click();
+  def login(driver: LiteWebDriver): Unit = {
+    val emailXPath = "input[@id='email']"
+
+    driver.goto("http://www.renren.com/");
+    driver.clear(emailXPath);
+    driver.input(emailXPath, "gaolianhao@sohu.com");
+    driver.input("input[@id='password']", "19811011");
+    driver.click("input[@id='login']");
+    
     Thread.sleep(2000);
   }
 
-  def sendMessageToOneRecipient(driver: WebDriver, friendIndex: Int, message: IMessage): Boolean = {
-    driver.findElement(By.xpath("//div[@class='menu-title']/a[text()='首页']")).click();
-    Thread.sleep(1000);
+  def sendMessageToOneRecipient(driver: LiteWebDriver, friendIndex: Int, message: IMessage): Boolean = {
+    driver.click("//div[@class='menu-title']/a[text()='首页']");
 
-    val friendList = driver.findElements(By.xpath("//ul[@class='people-list']//span[@class='headpichold']/a"));
-    friendList.get(friendIndex).click();
-    Thread.sleep(1000);
+    val friendList = driver.findElements("//ul[@class='people-list']//span[@class='headpichold']/a");
+    friendList(friendIndex).click();
 
     var friendlyMessage = buildFriendlyMessage(driver, message);
 
-    driver.findElement(By.id("proTabFeedId_")).click();
-    Thread.sleep(1000);
+    driver.click("div[@id='proTabFeedId_']");
 
-    driver.findElement(By.xpath("//div[@class='m-editor-textarea']/textarea[@id='cmtbody']"))
-      .sendKeys(friendlyMessage);
-    Thread.sleep(1000);
+    driver.input("//div[@class='m-editor-textarea']/textarea[@id='cmtbody']",friendlyMessage);
 
-    driver.findElement(By.id("whisper")).click();
-    Thread.sleep(1000);
+    driver.click("//input[@id='whisper']");
 
-    driver.findElement(By.xpath("//input[@id='commentPostBtn']")).click();
-    Thread.sleep(1000);
+    driver.click("//input[@id='commentPostBtn']");
 
     return true;
   }
 
-  private def buildFriendlyMessage(driver: WebDriver, message: IMessage): String = {
+  private def buildFriendlyMessage(driver: LiteWebDriver, message: IMessage): String = {
     var gender = "";
     var name = "";
     try {
-      val genderEle = driver.findElement(By.xpath("//ul[@class='user-info clearfix']/li[@class='gender']/span"));
-      gender = genderEle.getText().trim();
+      val gender = driver.getText("//ul[@class='user-info clearfix']/li[@class='gender']/span");
     } catch {
       case e: Exception => {
-        driver.findElement(By.id("proTabInfoId_")).click();
+        driver.click("input[@id='proTabInfoId_']");
         Thread.sleep(1000);
         try {
-          gender = driver.findElement(By.xpath("//div[@id='basicInfo']//dl[@class='info']//dd[1]")).getText().trim();
+          gender = driver.getText("//div[@id='basicInfo']//dl[@class='info']//dd[1]");
         } catch {
           case e: Exception => {}
         }
@@ -93,7 +85,7 @@ class AgentRenren(name: String) extends Agent(name) {
       }
     }
 
-    name = driver.findElement(By.xpath("//h1[contains(@class,'username')]")).getText().trim();
+    name = driver.getText("//h1[contains(@class,'username')]");
 
     var callStr = "";
     if ("男".equals(gender)) {

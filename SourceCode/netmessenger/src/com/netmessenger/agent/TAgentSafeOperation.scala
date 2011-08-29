@@ -1,13 +1,12 @@
 package com.netmessenger.agent
-import org.openqa.selenium.WebDriver
 
 trait TAgentSafeOperation {
 
-    protected def retriableDo(driver: WebDriver, func: () => Any): Any = {
-    val startingPage = driver.getCurrentUrl();
+    protected def retriableDo(driver: LiteWebDriver, func: () => Any): Any = {
+    val startingPage = driver.currentUrl;
     val retryTimes = 2;
     var exception : Exception = null;
-    for (i <- 1 until retryTimes) {
+    for (i <- 0 until retryTimes) {
       try {
         val result = func();
         return result;

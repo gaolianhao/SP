@@ -2,18 +2,16 @@ package com.netmessenger.agent.agentkaixin
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.By
 import com.netmessenger.agent.TAgentSafeOperation
+import com.netmessenger.agent.LiteWebDriver
 
 trait TCommon extends TAgentSafeOperation {
   
-  def login(driver: WebDriver): Unit = {
-    driver.get("http://www.kaixin001.com/");
-    val username = driver.findElement(By.name("email"));
-    username.clear();
-    username.sendKeys("liano_x@sohu.com");
-    val password = driver.findElement(By.name("password"));
-    password.sendKeys("19811011");
-    val submitBt = driver.findElement(By.id("btn_dl"));
-    submitBt.click();
-    Thread.sleep(3000);
+  def login(driver: LiteWebDriver): Unit = {
+    val emailXPath = "//input[@name='email']"
+    driver.goto("http://www.kaixin001.com/");
+    driver.clear(emailXPath);
+    driver.input(emailXPath,"liano_x@sohu.com");
+    driver.input("//input[@name='password']", "19811011");
+    driver.click("//input[@id='btn_dl']");
   }
 }
