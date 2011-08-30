@@ -1,4 +1,4 @@
-package com.netmessenger.agent;
+package com.netmessenger.agent.agentkaixin;
 
 import org.junit.Test;
 

@@ -13,6 +13,7 @@ public class RecipientInfoDBMaintanceTest {
 		String dbFileName = "test.db";
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbFileName);
 		RecipientInfoDBMaintance dbMaintance = new  RecipientInfoDBMaintance(conn);
+		dbMaintance.clearTable();
 		dbMaintance.createTable();
 		dbMaintance.clearTable();
 	}

@@ -62,9 +62,9 @@ class AgentManager (agentSource : InputStream) extends IAgentManager {
 		}
 	}
 
-	private def buildAgent( attributes:NamedNodeMap):IAgent = {
+	private def buildAgent( attributes:NamedNodeMap):Agent = {
 		
 		var className = attributes.getNamedItem("class").getNodeValue();
-		return Class.forName(className).newInstance().asInstanceOf[IAgent];
+		return Class.forName(className).newInstance().asInstanceOf[Agent];
 	}
 }

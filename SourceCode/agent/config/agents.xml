@@ -1,0 +1,4 @@
+<agents>
+	<agent class="com.netmessenger.agent.agentkaixin.AgentKaixin"/>
+	<agent class="com.netmessenger.agent.AgentRenren"/>
+</agents>

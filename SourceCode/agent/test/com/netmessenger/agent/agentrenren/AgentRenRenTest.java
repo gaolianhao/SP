@@ -1,4 +1,4 @@
-package com.netmessenger.agent;
+package com.netmessenger.agent.agentrenren;
 
 import org.junit.Test;
 
