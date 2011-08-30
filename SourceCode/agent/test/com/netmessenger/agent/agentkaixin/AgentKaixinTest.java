@@ -2,7 +2,6 @@ package com.netmessenger.agent.agentkaixin;
 
 import org.junit.Test;
 
-import com.netmessenger.agent.agentkaixin.AgentKaixin;
 import com.netmessenger.core.recipientprofile.RecipientAge;
 import com.netmessenger.core.recipientprofile.RecipientGender;
 import com.netmessenger.core.recipientprofile.RecipientJob;

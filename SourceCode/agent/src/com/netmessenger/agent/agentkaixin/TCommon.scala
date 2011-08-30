@@ -1,8 +1,10 @@
 package com.netmessenger.agent.agentkaixin
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.By
-import com.netmessenger.agent.TAgentSafeOperation
-import com.netmessenger.agent.LiteWebDriver
+import com.netmessenger.agent.base.TAgentSafeOperation
+import com.netmessenger.agent.base.LiteWebDriver
+import com.netmessenger.agent.base.TAgentSafeOperation
+import com.netmessenger.agent.base.LiteWebDriver
 
 trait TCommon extends TAgentSafeOperation {
   

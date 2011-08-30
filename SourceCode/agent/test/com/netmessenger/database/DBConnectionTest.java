@@ -7,8 +7,7 @@ public class DBConnectionTest {
 
 	@Test
 	public void test() throws Exception {
-		DBConnection con = new DBConnection();
-		Assert.assertNotNull(con.getConnection());
+		Assert.assertNotNull(DBConnection.getConnection());
 	}
 
 }

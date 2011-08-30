@@ -1,4 +1,4 @@
-package com.netmessenger.agent
+package com.netmessenger.agent.base
 
 trait TAgentSafeOperation {
 

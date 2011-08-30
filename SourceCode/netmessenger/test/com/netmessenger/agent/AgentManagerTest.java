@@ -38,5 +38,11 @@ class AgentTest implements IAgent{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void prepareRunningEnvironment() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

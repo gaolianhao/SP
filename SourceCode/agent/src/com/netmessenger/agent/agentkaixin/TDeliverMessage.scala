@@ -3,12 +3,13 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import com.netmessenger.core.IMessage
-import com.netmessenger.agent.LiteWebDriver
+import com.netmessenger.agent.base.LiteWebDriver
 import scala.collection.JavaConversions._
 import com.netmessenger.core.recipientprofile.RecipientGender
 import com.netmessenger.agent.agentkaixin.datastore.IRecipientInfoDAO
 import com.netmessenger.agent.agentkaixin.datastore.RecipientInfo
 import com.netmessenger.agent.agentkaixin.datastore.RecipientInfoDAO
+import com.netmessenger.agent.base.LiteWebDriver
 
 trait TDeliverMessage extends TCommon{
 
@@ -35,9 +36,9 @@ trait TDeliverMessage extends TCommon{
   
   private def sendMessage(driver: LiteWebDriver,recipientInfo:RecipientInfo, message: IMessage): Unit = {
     safelyRetriableDo(driver, () => {
-      println("send message to " + recipientInfo.getName());
+      println("send message to " + recipientInfo.name);
       
-      driver.goto(recipientInfo.getHomePage());
+      driver.goto(recipientInfo.homePage);
       driver.click("//a[text()='发短消息']");
       driver.input("//div[@id='content_div']/textarea", buildFriendlyMessage(recipientInfo, message));
       driver.findElement("//input[@id='sendbtn']").click();
@@ -46,12 +47,12 @@ trait TDeliverMessage extends TCommon{
   
   private def buildFriendlyMessage(recipientInfo : RecipientInfo, message : IMessage) : String = {
     var niceCall = "";
-    if(RecipientGender.FEMALE == recipientInfo.getGender()){
-      niceCall = recipientInfo.getName() +" 美女,\n";
-    }else if(RecipientGender.MALE == recipientInfo.getGender()){
-    	niceCall = recipientInfo.getName() +" 帅哥,\n";
+    if(RecipientGender.FEMALE == recipientInfo.gender){
+      niceCall = recipientInfo.name +" 美女,\n";
+    }else if(RecipientGender.MALE == recipientInfo.gender){
+    	niceCall = recipientInfo.name +" 帅哥,\n";
     }else{
-      niceCall = "Hello " + recipientInfo.getName() + "\n";
+      niceCall = "Hello " + recipientInfo.name + "\n";
     }
     
     return niceCall + message.getContent();

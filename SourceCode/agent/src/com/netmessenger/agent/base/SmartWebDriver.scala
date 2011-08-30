@@ -1,4 +1,4 @@
-package com.netmessenger.agent
+package com.netmessenger.agent.base
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 

@@ -1,4 +1,4 @@
-package com.netmessenger.agent;
+package com.netmessenger.agent.renren;
 
 import java.util.List
 import java.util.NoSuchElementException
@@ -6,12 +6,11 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
+import com.netmessenger.agent.base.LiteWebDriver
+import com.netmessenger.agent.base.Agent
 import com.netmessenger.core.IMessage
-import com.netmessenger.core.recipientprofile.RecipientAge
-import com.netmessenger.core.recipientprofile.RecipientGender
-import com.netmessenger.core.recipientprofile.RecipientJob;
 
-class AgentRenren() extends Agent() {
+class AgentRenren extends Agent {
 
   override def deliverMessage(message: IMessage) = {
     val driver = new LiteWebDriver(new FirefoxDriver());
@@ -34,7 +33,11 @@ class AgentRenren() extends Agent() {
   override def fuelAgent = {
 
   }
+  
+  override def prepareRunningEnvironment():Unit = {
 
+  }
+  
   def login(driver: LiteWebDriver): Unit = {
     val emailXPath = "input[@id='email']"
 

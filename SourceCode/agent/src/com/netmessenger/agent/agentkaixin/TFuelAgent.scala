@@ -1,12 +1,10 @@
 package com.netmessenger.agent.agentkaixin
 import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.By
-import org.openqa.selenium.WebDriver
-import com.netmessenger.core.recipientprofile.RecipientGender
-import com.netmessenger.agent.SmartWebDriver
+
 import com.netmessenger.agent.agentkaixin.datastore.IRecipientInfoDAO
 import com.netmessenger.agent.agentkaixin.datastore.RecipientInfo
-import com.netmessenger.agent.agentkaixin.datastore.RecipientInfoDAO
+import com.netmessenger.agent.base.SmartWebDriver
+import com.netmessenger.core.recipientprofile.RecipientGender
 
 
 trait TFuelAgent extends TCommon {
@@ -81,13 +79,13 @@ trait TFuelAgent extends TCommon {
     }
   }
   
-  private def countFriends(driver: com.netmessenger.agent.SmartWebDriver): Int = {
+  private def countFriends(driver: SmartWebDriver): Int = {
     val friendList = driver.findElements("//div[@id='homeflist']//div[@class='vafcon']//a");
     var friendSize = friendList.size;
     friendSize
   }
   
-  private def saveCurrentPageRecipientInfo(driver: com.netmessenger.agent.SmartWebDriver, dao: IRecipientInfoDAO): Unit = {
+  private def saveCurrentPageRecipientInfo(driver: SmartWebDriver, dao: IRecipientInfoDAO): Unit = {
     tryDo(() => {
       //save current recipient
       val name = driver.tryGetText(Array(
@@ -100,9 +98,9 @@ trait TFuelAgent extends TCommon {
           "//div[@class='myInfobox']//span[@class='sl'][1]"));
 
       val recipientInfo = new RecipientInfo();
-      recipientInfo.setName(name);
-      recipientInfo.setGender(parseGender(gender));
-      recipientInfo.setHomePage(driver.currentUrl);
+      recipientInfo.name = name;
+      recipientInfo.gender = parseGender(gender);
+      recipientInfo.homePage = driver.currentUrl;
       dao.add(recipientInfo);
       println("got recipient info : " + name);
     }); 

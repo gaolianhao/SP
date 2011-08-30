@@ -16,87 +16,88 @@ import com.netmessenger.core.recipientprofile.RecipientJob;
 public class RecipientInfoDAOTest {
 
 	@Test
-	public void testInsetOneRecipient() throws Exception{
+	public void testInsetOneRecipient() throws Exception {
 		Connection conn = getConnection();
-		
-		RecipientInfoDBMaintance dbMaintance = new  RecipientInfoDBMaintance(conn);
+
+		RecipientInfoDBMaintance dbMaintance = new RecipientInfoDBMaintance(conn);
 		dbMaintance.clearTable();
 		dbMaintance.createTable();
+		
 		RecipientInfoDAO dao = new RecipientInfoDAO(conn);
 		RecipientInfo recipientInfo = new RecipientInfo();
-		recipientInfo.setName("name");
-		recipientInfo.setAge(RecipientAge.SENIOR);
-		recipientInfo.setJob(RecipientJob.STUDENT);
-		recipientInfo.setGender(RecipientGender.FEMALE);
-		recipientInfo.setHomePage("http://homepage");
+		recipientInfo.name_$eq("name");
+		recipientInfo.age_$eq(RecipientAge.SENIOR);
+		recipientInfo.job_$eq(RecipientJob.STUDENT);
+		recipientInfo.gender_$eq(RecipientGender.FEMALE);
+		recipientInfo.homePage_$eq("http://homepage");
 		dao.add(recipientInfo);
-		
+
 		List<RecipientInfo> list = dao.findAll();
 		Assert.assertEquals(1, list.size());
-		
+
 		RecipientInfo targetRecipientInfo = list.get(0);
-		Assert.assertEquals(RecipientAge.SENIOR, targetRecipientInfo.getAge());
-		Assert.assertEquals(RecipientJob.STUDENT, targetRecipientInfo.getJob());
-		Assert.assertEquals(RecipientGender.FEMALE, targetRecipientInfo.getGender());
-		Assert.assertEquals("name", targetRecipientInfo.getName());
-		
-		
+		Assert.assertEquals(RecipientAge.SENIOR, targetRecipientInfo.age());
+		Assert.assertEquals(RecipientJob.STUDENT, targetRecipientInfo.job());
+		Assert.assertEquals(RecipientGender.FEMALE, targetRecipientInfo.gender());
+		Assert.assertEquals("name", targetRecipientInfo.name());
+
 	}
+
 	@Test
-	public void testInsetMultiRecipient() throws Exception{
+	public void testInsetMultiRecipient() throws Exception {
 		Connection conn = getConnection();
-		
-		RecipientInfoDBMaintance dbMaintance = new  RecipientInfoDBMaintance(conn);
+
+		RecipientInfoDBMaintance dbMaintance = new RecipientInfoDBMaintance(conn);
 		dbMaintance.clearTable();
 		dbMaintance.createTable();
 		RecipientInfoDAO dao = new RecipientInfoDAO(conn);
-		
+
 		RecipientInfo recipientInfo = new RecipientInfo();
-		recipientInfo.setName("name");
-		recipientInfo.setAge(RecipientAge.SENIOR);
-		recipientInfo.setJob(RecipientJob.STUDENT);
-		recipientInfo.setGender(RecipientGender.FEMALE);
-		recipientInfo.setHomePage("http://homepage");
+		recipientInfo.name_$eq("name");
+		recipientInfo.age_$eq(RecipientAge.SENIOR);
+		recipientInfo.job_$eq(RecipientJob.STUDENT);
+		recipientInfo.gender_$eq(RecipientGender.FEMALE);
+		recipientInfo.homePage_$eq("http://homepage");
 		dao.add(recipientInfo);
 
 		RecipientInfo recipientInfo2 = new RecipientInfo();
-		recipientInfo2.setName("name2");
-		recipientInfo2.setAge(RecipientAge.SENIOR);
-		recipientInfo2.setJob(RecipientJob.STUDENT);
-		recipientInfo2.setGender(RecipientGender.FEMALE);
-		recipientInfo2.setHomePage("http://homepage");
+		recipientInfo2.name_$eq("name2");
+		recipientInfo2.age_$eq(RecipientAge.SENIOR);
+		recipientInfo2.job_$eq(RecipientJob.STUDENT);
+		recipientInfo2.gender_$eq(RecipientGender.FEMALE);
+		recipientInfo2.homePage_$eq("http://homepage");
 		dao.add(recipientInfo);
 
-		
 		List<RecipientInfo> list = dao.findAll();
 		Assert.assertEquals(2, list.size());
 	}
-	
+
 	@Test
-	public void testExist() throws Exception{
+	public void testExist() throws Exception {
 		Connection conn = getConnection();
-		
-		RecipientInfoDBMaintance dbMaintance = new  RecipientInfoDBMaintance(conn);
+
+		RecipientInfoDBMaintance dbMaintance = new RecipientInfoDBMaintance(conn);
 		dbMaintance.clearTable();
 		dbMaintance.createTable();
 		RecipientInfoDAO dao = new RecipientInfoDAO(conn);
-		
+
 		RecipientInfo recipientInfo = new RecipientInfo();
-		recipientInfo.setName("name");
-		recipientInfo.setAge(RecipientAge.SENIOR);
-		recipientInfo.setJob(RecipientJob.STUDENT);
-		recipientInfo.setGender(RecipientGender.FEMALE);
-		recipientInfo.setHomePage("http://homepage");
+		recipientInfo.name_$eq("name");
+		recipientInfo.age_$eq(RecipientAge.SENIOR);
+		recipientInfo.job_$eq(RecipientJob.STUDENT);
+		recipientInfo.gender_$eq(RecipientGender.FEMALE);
+		recipientInfo.homePage_$eq("http://homepage");
 		dao.add(recipientInfo);
-		
+
 		Assert.assertTrue(dao.isExist(recipientInfo));
 	}
+
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
 		String dbFileName = "test.db";
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbFileName);
 		return conn;
-		
+
 	}
 
 }
