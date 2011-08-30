@@ -9,7 +9,7 @@ public class IocContainer {
 	public static IocContainer INSTANCE = new IocContainer();
 	
 	public IMessageManager getMessageManager(){
-		return new MessageManager();
+		return new MessageManager(this.getClass().getResourceAsStream("/messages.xml"));
 	}
 	
 	public IAgentManager getAgentManager(){
