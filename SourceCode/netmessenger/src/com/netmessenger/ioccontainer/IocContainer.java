@@ -13,6 +13,6 @@ public class IocContainer {
 	}
 	
 	public IAgentManager getAgentManager(){
-		return new AgentManager();
+		return new AgentManager(this.getClass().getResourceAsStream("/agents.xml"));
 	}
 }

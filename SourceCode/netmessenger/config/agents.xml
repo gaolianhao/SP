@@ -1,0 +1,3 @@
+<agents>
+	<agent recipientage="ALL" recipientgender="ALL" recipientjob="ALL" class="com.netmessenger.agent.AgentKaixin001"/>
+</agents>

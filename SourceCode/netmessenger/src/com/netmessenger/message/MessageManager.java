@@ -12,6 +12,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.netmessenger.core.IMessage;
@@ -44,13 +45,14 @@ public class MessageManager implements IMessageManager {
 			XPathExpression expr = xPath.compile(target);
 			NodeList nodes = (NodeList)expr.evaluate(doc,XPathConstants.NODESET);
 			for(int i=0;i<nodes.getLength();i++){
-				NamedNodeMap attributes = nodes.item(i).getAttributes();
+				Node node = nodes.item(i);
+				NamedNodeMap attributes = node.getAttributes();
 				
 				Message message = new Message(
 						RecipientAge.parse(attributes.getNamedItem("recipientage").getNodeValue()),
 						RecipientJob.parse(attributes.getNamedItem("recipientjob").getNodeValue()),
 						RecipientGender.parse(attributes.getNamedItem("recipientgender").getNodeValue()),
-						attributes.getNamedItem("content").getNodeValue()
+						node.getTextContent()
 						);
 				messages.add(message);
 			}

@@ -1,6 +1,8 @@
 package com.netmessenger.core;
 
+import java.util.List;
+
 public interface IAgentManager {
 
-	IAgent findAgent(IMessage message);
+	List<IAgent> findAgent(IMessage message);
 }

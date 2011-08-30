@@ -19,8 +19,11 @@ public class Main {
 		IAgentManager agentManager = IocContainer.INSTANCE.getAgentManager();
 		IMessageManager messageManager = IocContainer.INSTANCE.getMessageManager(); 
 		IMessage message = messageManager.findMessage();
-		IAgent agent = agentManager.findAgent(message);
-		agent.deliverMessage(message);
+		List<IAgent> agents = agentManager.findAgent(message);
+		for(int i=0;i<agents.size();i++){
+			agents.get(i).deliverMessage(message);
+		}
+		
 	}
 	
 	 public static void main2(String[] args){
