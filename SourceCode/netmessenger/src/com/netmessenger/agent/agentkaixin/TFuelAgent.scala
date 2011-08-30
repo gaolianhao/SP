@@ -3,23 +3,25 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import com.netmessenger.core.recipientprofile.RecipientGender
-import com.netmessenger.recipient.RecipientInfo
-import com.netmessenger.recipient.RecipientInfoDAO
 import com.netmessenger.agent.SmartWebDriver
+import com.netmessenger.agent.agentkaixin.datastore.IRecipientInfoDAO
+import com.netmessenger.agent.agentkaixin.datastore.RecipientInfo
+import com.netmessenger.agent.agentkaixin.datastore.RecipientInfoDAO
+
 
 trait TFuelAgent extends TCommon {
 
-  def fuelAgent(dao : RecipientInfoDAO) = {
+  def fuelAgent(dao : IRecipientInfoDAO) = {
     val driver = new SmartWebDriver(new FirefoxDriver());
     login(driver);
-    grabIndepthFriends(driver, dao, 0, 2, Set(driver.currentUrl));
+    grabIndepthFriends(driver, dao, 0, 2, Set());
     //grabFirstLevelFriends(driver, dao, 0);
-    System.out.println("Now you have " + dao.getRecipients().size() + " customers in total");
+    System.out.println("Now you have " + dao.countRecipients() + " customers in total");
     dao.save();
     driver.quit();
   }
 
-  private def grabFirstLevelFriends(driver: SmartWebDriver, dao: RecipientInfoDAO, friendIndex: Int): Unit = {
+  private def grabFirstLevelFriends(driver: SmartWebDriver, dao: IRecipientInfoDAO, friendIndex: Int): Unit = {
     safelyRetriableDo(driver, () => {
       val currentUrl = driver.currentUrl;
       val friendsXPath = "//div[@id='homeflist']//div[@class='vafcon']//a"
@@ -38,7 +40,7 @@ trait TFuelAgent extends TCommon {
 
   }
 
-  private def grabIndepthFriends(driver: SmartWebDriver, dao: RecipientInfoDAO, currentDepth: Int, maxDepth: Int, stackSet : Set[String]): Unit = {
+  private def grabIndepthFriends(driver: SmartWebDriver, dao: IRecipientInfoDAO, currentDepth: Int, maxDepth: Int, stackSet : Set[String]): Unit = {
     safelyRetriableDo(driver, () => {
       
       //save current status
@@ -85,7 +87,7 @@ trait TFuelAgent extends TCommon {
     friendSize
   }
   
-  private def saveCurrentPageRecipientInfo(driver: com.netmessenger.agent.SmartWebDriver, dao: com.netmessenger.recipient.RecipientInfoDAO): Unit = {
+  private def saveCurrentPageRecipientInfo(driver: com.netmessenger.agent.SmartWebDriver, dao: IRecipientInfoDAO): Unit = {
     tryDo(() => {
       //save current recipient
       val name = driver.tryGetText(Array(

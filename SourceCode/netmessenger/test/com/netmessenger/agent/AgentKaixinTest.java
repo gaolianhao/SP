@@ -12,7 +12,7 @@ public class AgentKaixinTest {
 
 	@Test
 	public void testDeliveryMessage() {
-		AgentKaixin agentKaixin001 = new AgentKaixin("kaixin");
+		AgentKaixin agentKaixin001 = new AgentKaixin();
 		Message message = new Message
 				(RecipientAge.ALL,
 				RecipientJob.ALL,
@@ -23,7 +23,7 @@ public class AgentKaixinTest {
 	
 	@Test
 	public void testFuelAgent() {
-		AgentKaixin agentKaixin001 = new AgentKaixin("kaixin");
+		AgentKaixin agentKaixin001 = new AgentKaixin();
 		agentKaixin001.fuelAgent();
 	}	
 

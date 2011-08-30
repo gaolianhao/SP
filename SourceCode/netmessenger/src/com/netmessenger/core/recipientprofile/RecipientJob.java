@@ -16,7 +16,6 @@ public enum RecipientJob {
 		if(ALL.toString().toLowerCase().equals(value.toLowerCase())){
 			return ALL;
 		}
-		
 		throw new Exception("unparsable RecipientJob:" + value);
 		
 	}

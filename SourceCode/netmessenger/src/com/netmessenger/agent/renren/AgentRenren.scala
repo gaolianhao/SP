@@ -10,9 +10,8 @@ import com.netmessenger.core.IMessage
 import com.netmessenger.core.recipientprofile.RecipientAge
 import com.netmessenger.core.recipientprofile.RecipientGender
 import com.netmessenger.core.recipientprofile.RecipientJob;
-import com.netmessenger.recipient.RecipientInfoDAO
 
-class AgentRenren(name: String) extends Agent(name) {
+class AgentRenren() extends Agent() {
 
   override def deliverMessage(message: IMessage) = {
     val driver = new LiteWebDriver(new FirefoxDriver());

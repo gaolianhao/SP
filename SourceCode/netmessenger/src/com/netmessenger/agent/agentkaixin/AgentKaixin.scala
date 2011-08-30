@@ -1,18 +1,24 @@
 package com.netmessenger.agent.agentkaixin;
 
-import com.netmessenger.recipient.RecipientInfoDAO
 import com.netmessenger.agent.Agent
 import com.netmessenger.core.IMessage
+import com.netmessenger.database.DBConnection
+import com.netmessenger.agent.agentkaixin.datastore.RecipientInfoDAO
+import com.netmessenger.agent.agentkaixin.datastore.IRecipientInfoDAO
 
-class AgentKaixin(name : String) extends Agent(name) with TFuelAgent with TDeliverMessage {
+class AgentKaixin extends Agent with TFuelAgent with TDeliverMessage {
 
   override def fuelAgent() : Unit = {
-    val dao = new RecipientInfoDAO(name);
+    val con = new DBConnection();
+    val dao = new RecipientInfoDAO(con.getConnection()).asInstanceOf[IRecipientInfoDAO];
     this.fuelAgent(dao);
+    con.getConnection().close();
   }
   
   override def deliverMessage(message : IMessage) : Unit = {
-    val dao = new RecipientInfoDAO(name);
+    val con = new DBConnection();
+    val dao = new RecipientInfoDAO(con.getConnection());
     this.deliverMessage(message,dao);
+    con.getConnection().close();
   }
 }

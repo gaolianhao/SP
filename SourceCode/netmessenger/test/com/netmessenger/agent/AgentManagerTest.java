@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.netmessenger.core.IAgent;
-import com.netmessenger.core.IMessage;
 
 public class AgentManagerTest {
 
@@ -19,27 +18,7 @@ public class AgentManagerTest {
 		Assert.assertNotNull(agents);
 		Assert.assertEquals(1, agents.size());
 		Agent agent = (Agent)agents.get(0);
-		Assert.assertEquals("testagent", agent.getName());
 		Assert.assertEquals(AgentTest.class, agent.getClass());
 	}
-	
-class AgentTest extends Agent{
 
-	public AgentTest(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public void deliverMessage(IMessage message) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void fuelAgent() {
-		
-	}
-	
-}
 }

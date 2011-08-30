@@ -4,18 +4,19 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import com.netmessenger.core.IMessage
 import com.netmessenger.agent.LiteWebDriver
-import com.netmessenger.recipient.RecipientInfoDAO
-import com.netmessenger.recipient.RecipientInfo
 import scala.collection.JavaConversions._
 import com.netmessenger.core.recipientprofile.RecipientGender
+import com.netmessenger.agent.agentkaixin.datastore.IRecipientInfoDAO
+import com.netmessenger.agent.agentkaixin.datastore.RecipientInfo
+import com.netmessenger.agent.agentkaixin.datastore.RecipientInfoDAO
 
 trait TDeliverMessage extends TCommon{
 
-  def deliverMessage(message: IMessage, dao: RecipientInfoDAO): Unit = {
+  def deliverMessage(message: IMessage, dao: IRecipientInfoDAO): Unit = {
     val driver = new LiteWebDriver(new FirefoxDriver());
     login(driver);
 
-    val recipientList = dao.getRecipientInfoList();
+    val recipientList = dao.findAll();
     val selectedRecipients = selectRecipients(recipientList.toList);
     recipientList.foreach(recipientInfo => {
       sendMessage(driver, recipientInfo, message);
@@ -29,7 +30,7 @@ trait TDeliverMessage extends TCommon{
     return recipientList
   }
   private def findRecipients(dao: RecipientInfoDAO): List[RecipientInfo] = {
-    return dao.getRecipientInfoList().toList;
+    return dao.findAll().toList;
   }
   
   private def sendMessage(driver: LiteWebDriver,recipientInfo:RecipientInfo, message: IMessage): Unit = {

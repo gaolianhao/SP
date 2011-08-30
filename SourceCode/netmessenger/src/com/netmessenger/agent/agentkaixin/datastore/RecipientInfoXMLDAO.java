@@ -1,4 +1,4 @@
-package com.netmessenger.recipient;
+package com.netmessenger.agent.agentkaixin.datastore;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -30,13 +30,13 @@ import org.w3c.dom.NodeList;
 
 import com.netmessenger.core.recipientprofile.RecipientGender;
 
-public class RecipientInfoDAO {
+public class RecipientInfoXMLDAO implements IRecipientInfoDAO{
 
 	private LinkedList<RecipientInfo> recipientList = new LinkedList< RecipientInfo>();
 	private HashMap<String, RecipientInfo> map = new HashMap<String, RecipientInfo>();
 	private String agentName;
 
-	public RecipientInfoDAO(String agentName) {
+	public RecipientInfoXMLDAO(String agentName) {
 		this.agentName = agentName;
 		readData();
 	}
@@ -53,7 +53,7 @@ public class RecipientInfoDAO {
 		map.put(recipientInfo.homePage, recipientInfo);
 	}
 	
-	public List<RecipientInfo> getRecipients(){
+	public List<RecipientInfo> findAll(){
 		return recipientList;
 	}
 	
@@ -142,9 +142,15 @@ public class RecipientInfoDAO {
 	}
 
 
-
-	public List<RecipientInfo> getRecipientInfoList() {
+	@Override
+	public int countRecipients() {
 		
-		return recipientList;
+		return this.recipientList.size();
+	}
+
+	@Override
+	public void close() {
+		
+		
 	}
 }

@@ -2,7 +2,7 @@ package com.netmessenger.agent
 
 trait TAgentSafeOperation {
 
-  protected def safelyRetriableDo(driver: LiteWebDriver, func: () => Any): Any = {
+   def safelyRetriableDo(driver: LiteWebDriver, func: () => Any): Any = {
     val startingPage = driver.currentUrl;
     val retryTimes = 2;
     for (i <- 0 until retryTimes) {
@@ -10,8 +10,11 @@ trait TAgentSafeOperation {
         val result = func();
         return result;
       } catch {
+        case e:org.openqa.selenium.NoSuchElementException => {
+          
+        }
         case e: Exception => {
-          System.out.println("Exception occured:" + e.getMessage());
+          e.printStackTrace();
           System.out.println("Retrying the " + i + " time");
         }
       }
@@ -19,11 +22,15 @@ trait TAgentSafeOperation {
     return null;
   }
   
-  protected def tryDo(func: () => Any) : Any = {
+   def tryDo(func: () => Any) : Any = {
     try{
       return func();
     }catch{
-      case e:Exception => {
+      case e: org.openqa.selenium.NoSuchElementException => {
+    	return null;
+      }
+      case e: Exception => {
+        e.printStackTrace();
         return null;
       }
     }

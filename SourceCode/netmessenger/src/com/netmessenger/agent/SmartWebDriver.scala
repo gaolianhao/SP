@@ -6,8 +6,8 @@ class SmartWebDriver(driver : WebDriver) extends LiteWebDriver(driver) with TAge
 
   def tryGetText(xpaths : Array[String]) : String = {
     xpaths.foreach(xpath => {
-    	val result = tryDo(()=>this.getText(xpath)).asInstanceOf[String];
-    	if(result != null) return result;
+    	val result = tryDo(()=>this.getText(xpath));
+    	if(result != null) return result.asInstanceOf[String];
     });
     throw new Exception("text [" + xpaths.toString() + "] can't be find on path : " + this.currentUrl);
   }
