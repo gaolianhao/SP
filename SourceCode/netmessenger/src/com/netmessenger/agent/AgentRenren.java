@@ -1,6 +1,7 @@
 package com.netmessenger.agent;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,16 +13,12 @@ import com.netmessenger.core.recipientprofile.RecipientAge;
 import com.netmessenger.core.recipientprofile.RecipientGender;
 import com.netmessenger.core.recipientprofile.RecipientJob;
 
-/**
- * 
- * a smarter agent that can identify user profile
- *
- */
-public class AgentKaixin001Pro extends Agent {
+public class AgentRenren extends Agent {
 
-	public AgentKaixin001Pro(RecipientAge recipientAge,
-			RecipientJob recipientJob, RecipientGender recipientGender) {
+	public AgentRenren(RecipientAge recipientAge, RecipientJob recipientJob,
+			RecipientGender recipientGender) {
 		super(recipientAge, recipientJob, recipientGender);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -32,9 +29,10 @@ public class AgentKaixin001Pro extends Agent {
 			(new Login(driver)).runStep();
 
 			// step2
-			List<WebElement> friendList = driver.findElements(By.xpath("//div[@id='homeflist']//div[@class='vafcon']//a"));
+			List<WebElement> friendList = driver.findElements(By.xpath("//ul[@class='people-list']//span[@class='headpichold']/a"));
 			int recipientNum = 0;
-			for(int i=0; i< friendList.size(); i++){
+			int friendListSize = friendList.size();
+			for(int i=0; i< friendListSize; i++){
 				Boolean isSendout = (Boolean)(new SendMessageToOneRecipient(driver, i, message)).runStep();
 				if(isSendout) recipientNum++;
 			}
@@ -56,15 +54,15 @@ public class AgentKaixin001Pro extends Agent {
 			super(driver);
 		}
 		protected Object runStep() throws Exception{
-			driver.get("http://www.kaixin001.com/");
-	        WebElement username = driver.findElement(By.name("email"));
+			driver.get("http://www.renren.com/");
+	        WebElement username = driver.findElement(By.id("email"));
 	        username.clear();
-	        username.sendKeys("liano_x@sohu.com");
-	        WebElement password = driver.findElement(By.name("password"));
+	        username.sendKeys("gaolianhao@sohu.com");
+	        WebElement password = driver.findElement(By.id("password"));
 	        password.sendKeys("19811011");
-	        WebElement submitBt = driver.findElement(By.id("btn_dl"));
+	        WebElement submitBt = driver.findElement(By.id("login"));
 	        submitBt.click();
-	        Thread.sleep(3000);
+	        Thread.sleep(2000);
 	        return null;
 		}
 		
@@ -81,38 +79,58 @@ public class AgentKaixin001Pro extends Agent {
 		}
 
 		protected Object runStep() throws Exception {
-			driver.findElement(By.xpath("//a[@class='t_link']//span[text()='首页']")).click();
+			driver.findElement(By.xpath("//div[@class='menu-title']/a[text()='首页']")).click();
 			Thread.sleep(1000);
 			
-			List<WebElement> friendList = driver.findElements(By.xpath("//div[@id='homeflist']//div[@class='vafcon']//a"));
+			List<WebElement> friendList = driver.findElements(By.xpath("//ul[@class='people-list']//span[@class='headpichold']/a"));
 			friendList.get(friendIndex).click();
 			Thread.sleep(1000);
 			
 			String friendlyMessage = buildFriendlyMessage(driver, message);
 			
-			driver.findElement(By.xpath("//a[text()='发短消息']")).click();
+			driver.findElement(By.id("proTabFeedId_")).click();
 			Thread.sleep(1000);
 			
-			driver.findElement(By.xpath("//div[@id='content_div']/textarea"))
+			driver.findElement(By.xpath("//div[@class='m-editor-textarea']/textarea[@id='cmtbody']"))
 					.sendKeys(friendlyMessage);
 			Thread.sleep(1000);
 			
-			driver.findElement(By.xpath("//input[@id='sendbtn']")).click();
-			Thread.sleep(2000);
+			driver.findElement(By.id("whisper")).click();
+			Thread.sleep(1000);
+			
+			driver.findElement(By.xpath("//input[@id='commentPostBtn']")).click();
+			Thread.sleep(1000);
 			
 			
 			return true;
 		}
 
-		private String buildFriendlyMessage(WebDriver driver, IMessage message) {
-			String name = driver.findElement(By.xpath("//div[@id='divstate0']//strong")).getText();
-			String gender = driver.findElement(By.xpath("//div[@class='sy_pr2']//tr[1]//span")).getText().trim();
+		private String buildFriendlyMessage(WebDriver driver, IMessage message) throws Exception{
+			String gender = "";
+			String name = "";
+			try{
+				WebElement genderEle = driver.findElement(By.xpath("//ul[@class='user-info clearfix']/li[@class='gender']/span"));
+				gender = genderEle.getText().trim();
+				
+			}catch(Exception e){
+				driver.findElement(By.id("proTabInfoId_")).click();
+				Thread.sleep(1000);
+				try{
+					gender = driver.findElement(By.xpath("//div[@id='basicInfo']//dl[@class='info']//dd[1]")).getText().trim();
+				}catch(Exception e2)
+				{
+					
+				}
+
+			}
+			
+			name = driver.findElement(By.xpath("//h1[contains(@class,'username')]")).getText().trim();
 			
 			String callStr = "";
 			if("男".equals(gender)){
-				callStr = name + " 小帅哥，";
+				callStr = name + " 帅哥，";
 			}else if("女".equals(gender)){
-				callStr = name + " 小美女，";
+				callStr = name + " 美女，";
 			}else{
 				callStr = "Hello,";
 			}
@@ -141,6 +159,6 @@ public class AgentKaixin001Pro extends Agent {
 		}
 
 	}
-}
 
+	}
 
