@@ -16,17 +16,6 @@ object DBConnection {
 	}
 	
 	def getFileName() : String = {
-		val domFactory = DocumentBuilderFactory.newInstance();
-		domFactory.setNamespaceAware(true);
-		val builder = domFactory.newDocumentBuilder();
-		var doc = builder.parse(java.lang.Thread.currentThread().getContextClassLoader().getResource("/database.xml").getPath());
-
-		val factory = XPathFactory.newInstance();
-		val xPath = factory.newXPath();
-		val target = "//database/file";
-
-		val expr = xPath.compile(target);
-		val nodes = expr.evaluate(doc, XPathConstants.NODESET).asInstanceOf[NodeList];
-		return nodes.item(0).getTextContent();
+		Thread.currentThread().getContextClassLoader().getResource("netmessenger.db").getFile();
 	}
 }

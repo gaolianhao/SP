@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="NetMessenger" default="build" basedir=".">
+<project name="NetMessenger" default="instruction" basedir=".">
 	<description>Project Build Script</description>
 	<property environment="env"/>
 	<property name="java.dir" location="${env.JAVA_HOME}"/>
@@ -24,10 +24,16 @@
 	<property name="build-classes.dir" location="${basedir}/build/classes"/>
 	<property name="build.dir" location="${basedir}/build"/>
 
-	<path id="project.classpath">
+	
+	<path id="project.library">
 		<pathelement location="${scala-library.jar}"/>
 		<fileset dir="${basedir}/library/selenium-2.5.0" includes="*.jar"/>
 		<fileset dir="${basedir}/library/selenium-2.5.0/libs" includes="*.jar"/>
+		<fileset dir="${basedir}/library/sqlite/" includes="*.jar"/>
+	</path>
+	
+	<path id="project.classpath">
+		<path refid="project.library"/>
 		<pathelement location="${build-classes.dir}"/>
 	</path>
 
@@ -54,13 +60,14 @@
 	<target name="package" depends="compilejava,compilescala" description="package whole project">
 		<jar destfile="${build.dir}/netmessenger.jar">
 			<fileset dir="${build-classes.dir}" />
-			<manifest>
-		      <attribute name="Main-Class"
-		            value="com.netmessenger.Main"/>
-		    </manifest>
+
 		</jar>
 		<mkdir dir="${build.dir}/data"/>
 		<mkdir dir="${build.dir}/config"/>
+		<copy todir="${build.dir}/config">
+			<fileset dir="${agent.project.dir}/config"/>
+			<fileset dir="${netmessenger.project.dir}/config"/>
+		</copy>
 		<copy todir="${build.dir}/config">
 			<fileset dir="${agent.project.dir}/config"/>
 			<fileset dir="${netmessenger.project.dir}/config"/>
@@ -75,21 +82,48 @@
 	</target>
 
 	<!-- Run program -->
-	<path id="running.classpath">
-		<pathelement location="${scala-library.jar}"/>
-		<fileset dir="${basedir}/library/selenium-2.5.0" includes="*.jar"/>
-		<fileset dir="${basedir}/library/selenium-2.5.0/libs" includes="*.jar"/>
-		<pathelement location="${basedir}/config"/>
-	</path>
 
-	<target name="go">
-		<java jar="${build.dir}/netmessenger.jar"
-		           fork="true"
-		           failonerror="true"
-		           maxmemory="128m"
-					classpathref="running.classpath"
-					>
+	<target name="go-initdb">
+		<java classname="com.netmessenger.Main">
+			 <classpath>
+				<path refid="project.library"/>				
+				<pathelement location="${build.dir}/netmessenger.jar"/>
+				<pathelement path="${build.dir}/config"/>
+			 </classpath>			
 			<arg value="initdb"/>
 		</java>
 	</target>
+
+	<target name="go-fuel">
+		<java classname="com.netmessenger.Main">
+			 <classpath>
+				<path refid="project.library"/>				
+				<pathelement location="${build.dir}/netmessenger.jar"/>
+				<pathelement path="${build.dir}/config"/>
+			 </classpath>			
+			<arg value="fuel"/>
+		</java>
+	</target>
+
+	<target name="go-deliver">
+		<java classname="com.netmessenger.Main">
+			 <classpath>
+				<path refid="project.library"/>				
+				<pathelement location="${build.dir}/netmessenger.jar"/>
+				<pathelement path="${build.dir}/config"/>
+			 </classpath>			
+			<arg value="deliver"/>
+		</java>
+	</target>
+
+	<!-- instruction -->
+	<target name="instruction">
+		<echo>build      -- build whole project</echo>
+		<echo>go-initdb  -- build whole project</echo>
+		<echo>go-fuel    -- fuel agents</echo>
+		<echo>go-deliver -- deliver message</echo>
+	</target>
+
+
+
 </project>
