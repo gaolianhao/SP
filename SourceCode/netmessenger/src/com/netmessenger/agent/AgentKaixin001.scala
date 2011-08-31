@@ -8,18 +8,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.netmessenger.core.IMessage;
+import com.netmessenger.recipient.RecipientInfoDAO;
 
-public class AgentKaixin001 extends Agent {
+class AgentKaixin001(name:String, dao:RecipientInfoDAO) extends Agent(name, dao) {
 
 
-	public AgentKaixin001(String name) {
-		super(name);
-	}
-
-	@Override
-	public void deliverMessage(IMessage message) {
-		WebDriver driver = new FirefoxDriver();
-		try {
+	
+	override def deliverMessage(message : IMessage) {
+		val driver = new FirefoxDriver();
+		
 			// step1
 			(new Login(driver)).runStep();
 
@@ -27,34 +24,26 @@ public class AgentKaixin001 extends Agent {
 			(new GotoSendMessagePage(driver)).runStep();
 
 			// step3
-			int recipientNum = (Integer) (new SendMessage(driver, message))
-					.runStep();
+			var recipientNum = new SendMessage(driver, message).runStep();
 
 			// step4
-			(new TaskReport(driver, recipientNum)).runStep();
+			(new TaskReport(driver, recipientNum.asInstanceOf[Int])).runStep();
 
 			driver.quit();
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
 	}
 
-	class Login extends Step {
-		public Login(WebDriver driver) {
-			super(driver);
-		}
+	class Login (driver : WebDriver) extends Step(driver) {
 
-		protected Object runStep() throws Exception {
+		override def runStep() : Any = {
 			driver.get("http://www.kaixin001.com/");
-			WebElement username = driver.findElement(By.name("email"));
+			val username = driver.findElement(By.name("email"));
 			username.clear();
 			username.sendKeys("liano_x@sohu.com");
-			WebElement password = driver.findElement(By.name("password"));
+			val password = driver.findElement(By.name("password"));
 			password.sendKeys("19811011");
-			WebElement submitBt = driver.findElement(By.id("btn_dl"));
+			val submitBt = driver.findElement(By.id("btn_dl"));
 			submitBt.click();
 			Thread.sleep(3000);
 			return null;
@@ -62,35 +51,26 @@ public class AgentKaixin001 extends Agent {
 
 	}
 
-	class GotoSendMessagePage extends Step {
-		public GotoSendMessagePage(WebDriver driver) {
-			super(driver);
-		}
+	class GotoSendMessagePage(driver : WebDriver) extends Step (driver) {
 
-		protected Object runStep() throws Exception {
-			String homePage = driver.getCurrentUrl();
+		override def runStep() : Any = {
+			val homePage = driver.getCurrentUrl();
 			driver.findElement(By.xpath("//a[text()='发短消息']")).click();
 			Thread.sleep(1000);
 			return null;
 		}
 	}
 
-	class SendMessage extends Step {
-		private IMessage message;
+	class SendMessage(driver : WebDriver, message : IMessage) extends Step(driver) {
 
-		public SendMessage(WebDriver driver, IMessage message) {
-			super(driver);
-			this.message = message;
-		}
-
-		protected Object runStep() throws Exception {
+		override def runStep() :Any = {
 			driver.findElement(By.xpath("//div[@id='supersuggestxx_sh']//img"))
 					.click();
 			Thread.sleep(1000);
-			List<WebElement> friendList = driver
+			val friendList = driver
 					.findElements(By
 							.xpath("//ul[@id='supersuggestviewall_friends_list']//input"));
-			for (int i = 0; i < friendList.size(); i++) {
+			for (i <- 0 until friendList.size()) {
 				friendList.get(i).click();
 			}
 			Thread.sleep(1000);
@@ -110,17 +90,11 @@ public class AgentKaixin001 extends Agent {
 		}
 	}
 
-	class TaskReport extends Step {
-		private int recipientNum;
+	class TaskReport (driver : WebDriver, recipientNum : Int) extends Step (driver){
 
-		public TaskReport(WebDriver driver, int recipientNum) {
-			super(driver);
-			this.recipientNum = recipientNum;
-		}
-
-		@Override
-		protected Object runStep() throws Exception {
-			WebElement successMark = driver.findElement(By
+		
+		override def runStep(): Any = {
+			val successMark = driver.findElement(By
 					.xpath("//div[@class='bqd_on' and text()='发件箱']"));
 			if (successMark != null && successMark.isDisplayed()) {
 				System.out.println("Message sent out to " + recipientNum
@@ -131,8 +105,8 @@ public class AgentKaixin001 extends Agent {
 
 	}
 
-	@Override
-	public void findAndSaveRecipientInfo() {
+	
+	def findAndSaveRecipientInfo = {
 		
 		
 	}
