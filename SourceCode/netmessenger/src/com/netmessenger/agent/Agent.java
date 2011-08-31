@@ -2,37 +2,25 @@ package com.netmessenger.agent;
 
 import com.netmessenger.core.IAgent;
 import com.netmessenger.core.IMessage;
-import com.netmessenger.core.recipientprofile.RecipientAge;
-import com.netmessenger.core.recipientprofile.RecipientGender;
-import com.netmessenger.core.recipientprofile.RecipientJob;
+import com.netmessenger.recipient.RecipientInfoDAO;
 
 public abstract class Agent implements IAgent {
 
-	private RecipientAge recipientAge;
-	private RecipientJob recipientJob;
-	private RecipientGender recipientGender;
+	private String name = null;
+	protected RecipientInfoDAO dao;
 	
-	public Agent(RecipientAge recipientAge, RecipientJob recipientJob,
-			RecipientGender recipientGender) {
-		this.recipientAge = recipientAge;
-		this.recipientGender = recipientGender;
-		this.recipientJob = recipientJob;
+	public Agent(String name){
+		this.name = name;
+		this.dao = new RecipientInfoDAO(this);
 	}
-
+	
 	abstract public void deliverMessage(IMessage message);
-
-	public RecipientAge getRecipientAge() {
-		return recipientAge;
+	
+	abstract public void findAndSaveRecipientInfo();
+	
+	public String getName() {
+		return name;
 	}
 
-
-	public RecipientJob getRecipientJob() {
-		return recipientJob;
-	}
-
-
-	public RecipientGender getRecipientGender() {
-		return recipientGender;
-	}
 
 }

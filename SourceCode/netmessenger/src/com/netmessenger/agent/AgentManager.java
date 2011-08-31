@@ -73,13 +73,7 @@ public class AgentManager implements IAgentManager {
 			InvocationTargetException, Exception {
 		
 		String className = attributes.getNamedItem("class").getNodeValue();
-		Constructor constructor = Class.forName(className).getConstructor(new Class[]{RecipientAge.class, RecipientJob.class, RecipientGender.class});
-		return (Agent)constructor.newInstance(
-				RecipientAge.parse(attributes.getNamedItem(
-						"recipientage").getNodeValue()),
-				RecipientJob.parse(attributes.getNamedItem(
-						"recipientjob").getNodeValue()),
-				RecipientGender.parse(attributes.getNamedItem(
-						"recipientgender").getNodeValue()));
+		Constructor constructor = Class.forName(className).getConstructor(new Class[]{String.class});
+		return (Agent)constructor.newInstance(attributes.getNamedItem("name").getNodeValue());
 	}
 }

@@ -11,7 +11,7 @@ public class AgentKaixin001ProTest {
 
 	@Test
 	public void test() {
-		AgentKaixin001Pro agentKaixin001 = new AgentKaixin001Pro(RecipientAge.ALL, RecipientJob.ALL, RecipientGender.ALL);
+		AgentKaixin001Pro agentKaixin001 = new AgentKaixin001Pro("kaixin");
 		Message message = new Message
 				(RecipientAge.ALL,
 				RecipientJob.ALL,

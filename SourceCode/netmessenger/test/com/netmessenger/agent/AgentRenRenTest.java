@@ -1,7 +1,5 @@
 package com.netmessenger.agent;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import com.netmessenger.core.recipientprofile.RecipientAge;
@@ -13,7 +11,7 @@ public class AgentRenRenTest {
 
 	@Test
 	public void test() {
-		AgentRenren agentRenren = new AgentRenren(RecipientAge.ALL, RecipientJob.ALL, RecipientGender.ALL);
+		AgentRenren agentRenren = new AgentRenren("renren");
 		Message message = new Message
 				(RecipientAge.ALL,
 				RecipientJob.ALL,

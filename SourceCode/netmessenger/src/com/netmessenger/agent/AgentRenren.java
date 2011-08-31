@@ -15,10 +15,9 @@ import com.netmessenger.core.recipientprofile.RecipientJob;
 
 public class AgentRenren extends Agent {
 
-	public AgentRenren(RecipientAge recipientAge, RecipientJob recipientJob,
-			RecipientGender recipientGender) {
-		super(recipientAge, recipientJob, recipientGender);
-		// TODO Auto-generated constructor stub
+
+	public AgentRenren(String name) {
+		super(name);
 	}
 
 	@Override
@@ -158,6 +157,12 @@ public class AgentRenren extends Agent {
 			return null;
 		}
 
+	}
+
+	@Override
+	public void findAndSaveRecipientInfo() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	}

@@ -1,3 +1,4 @@
 <agents>
-	<agent recipientage="ALL" recipientgender="ALL" recipientjob="ALL" class="com.netmessenger.agent.AgentKaixin001"/>
+	<agent name='kaikxin001' class="com.netmessenger.agent.AgentKaixin001"/>
+	<agent name='renren' class="com.netmessenger.agent.AgentRenren"/>
 </agents>

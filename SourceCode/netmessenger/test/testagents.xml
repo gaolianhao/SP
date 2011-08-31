@@ -1,3 +1,3 @@
 <agents>
-	<agent recipientage="youth" recipientgender="female" recipientjob="liberty" class="com.netmessenger.agent.AgentTest"/>
+	<agent name="testagent" class="com.netmessenger.agent.AgentTest"/>
 </agents>

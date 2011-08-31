@@ -8,9 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.netmessenger.core.IMessage;
-import com.netmessenger.core.recipientprofile.RecipientAge;
 import com.netmessenger.core.recipientprofile.RecipientGender;
-import com.netmessenger.core.recipientprofile.RecipientJob;
+import com.netmessenger.recipient.RecipientInfo;
 
 /**
  * 
@@ -19,9 +18,9 @@ import com.netmessenger.core.recipientprofile.RecipientJob;
  */
 public class AgentKaixin001Pro extends Agent {
 
-	public AgentKaixin001Pro(RecipientAge recipientAge,
-			RecipientJob recipientJob, RecipientGender recipientGender) {
-		super(recipientAge, recipientJob, recipientGender);
+ 
+	public AgentKaixin001Pro(String name) {
+		super(name);
 	}
 
 	@Override
@@ -50,6 +49,32 @@ public class AgentKaixin001Pro extends Agent {
 		}
 	}
 	
+	@Override
+	public void findAndSaveRecipientInfo() {
+		WebDriver driver = new FirefoxDriver();
+		try {
+			// step1
+			(new Login(driver)).runStep();
+
+			// step2
+			List<WebElement> friendList = driver.findElements(By.xpath("//div[@id='homeflist']//div[@class='vafcon']//a"));
+			int number = 0;
+			for(int i=0; i< friendList.size(); i++){
+				Boolean isDone = (Boolean)(new GrabRecipientInfo(driver, i)).runStep();
+				if(isDone) number++;
+			}
+			
+			// step4
+			System.out.println("add " + number + " new customers");
+
+			driver.quit();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	class Login extends Step{
 		public Login(WebDriver driver){
@@ -66,6 +91,48 @@ public class AgentKaixin001Pro extends Agent {
 	        submitBt.click();
 	        Thread.sleep(3000);
 	        return null;
+		}
+		
+	}
+	
+	class GrabRecipientInfo extends Step {
+		private int friendIndex;
+
+		public GrabRecipientInfo(WebDriver driver, int friendIndex) {
+			super(driver);
+			this.friendIndex = friendIndex;
+		}
+
+		protected Object runStep() throws Exception {
+			driver.findElement(By.xpath("//a[@class='t_link']//span[text()='首页']")).click();
+			Thread.sleep(1000);
+			
+			List<WebElement> friendList = driver.findElements(By.xpath("//div[@id='homeflist']//div[@class='vafcon']//a"));
+			friendList.get(friendIndex).click();
+			Thread.sleep(1000);
+			
+			String name = driver.findElement(By.xpath("//div[@id='divstate0']//strong")).getText();
+			String gender = driver.findElement(By.xpath("//div[@class='sy_pr2']//tr[1]//span")).getText().trim();
+			
+			RecipientInfo recipientInfo = new RecipientInfo();
+			recipientInfo.setName(name);
+			recipientInfo.setGender(parseGender(gender));
+			recipientInfo.setHomePage(driver.getCurrentUrl());
+			dao.add(recipientInfo);
+			
+			Thread.sleep(1000);
+			
+			return true;
+		}
+
+		private RecipientGender parseGender(String gender) {
+			if("男".equals(gender)){
+				return RecipientGender.MALE;
+			}else if("女".equals(gender)){
+				return RecipientGender.FEMALE;
+			}else{
+				return RecipientGender.ALL;
+			}
 		}
 		
 	}
@@ -88,6 +155,15 @@ public class AgentKaixin001Pro extends Agent {
 			friendList.get(friendIndex).click();
 			Thread.sleep(1000);
 			
+			String name = driver.findElement(By.xpath("//div[@id='divstate0']//strong")).getText();
+			String gender = driver.findElement(By.xpath("//div[@class='sy_pr2']//tr[1]//span")).getText().trim();
+			
+			RecipientInfo recipientInfo = new RecipientInfo();
+			recipientInfo.setName(name);
+			recipientInfo.setGender(parseGender(gender));
+			recipientInfo.setHomePage(driver.getCurrentUrl());
+			dao.add(recipientInfo);
+			
 			String friendlyMessage = buildFriendlyMessage(driver, message);
 			
 			driver.findElement(By.xpath("//a[text()='发短消息']")).click();
@@ -102,6 +178,16 @@ public class AgentKaixin001Pro extends Agent {
 			
 			
 			return true;
+		}
+
+		private RecipientGender parseGender(String gender) {
+			if("男".equals(gender)){
+				return RecipientGender.MALE;
+			}else if("女".equals(gender)){
+				return RecipientGender.FEMALE;
+			}else{
+				return RecipientGender.ALL;
+			}
 		}
 
 		private String buildFriendlyMessage(WebDriver driver, IMessage message) {
@@ -120,7 +206,7 @@ public class AgentKaixin001Pro extends Agent {
 			return callStr + "\n\r" + message.getContent();
 		}
 	}
-
+	
 	class TaskReport extends Step {
 		private int recipientNum;
 
@@ -141,6 +227,8 @@ public class AgentKaixin001Pro extends Agent {
 		}
 
 	}
+
+	
 }
 
 
