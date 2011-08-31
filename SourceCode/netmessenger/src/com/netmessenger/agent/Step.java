@@ -8,15 +8,19 @@ import org.openqa.selenium.WebDriver;
  */
 public abstract class Step {
 
-	public abstract Object runStep(WebDriver driver);
-
-	public Object run(WebDriver driver) {
+	protected WebDriver driver;
+	protected abstract Object runStep() throws Exception;
+	
+	public Step(WebDriver driver){
+		this.driver = driver;
+	}
+	public Object run() {
 		Exception exception = null;
 		String startingPage = driver.getCurrentUrl();
 		int retrytimes = 2;
 		for (int i = 1; i <= retrytimes ; i++) {
 			try {
-				Object result = runStep(driver);
+				Object result = runStep();
 				return result;
 			} catch (Exception e) {
 				 exception = e;
