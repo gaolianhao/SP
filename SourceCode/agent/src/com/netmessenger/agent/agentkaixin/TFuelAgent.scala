@@ -1,18 +1,19 @@
 package com.netmessenger.agent.agentkaixin
 import org.openqa.selenium.firefox.FirefoxDriver
-
 import com.netmessenger.agent.agentkaixin.datastore.IRecipientInfoDAO
 import com.netmessenger.agent.agentkaixin.datastore.RecipientInfo
 import com.netmessenger.agent.base.SmartWebDriver
 import com.netmessenger.core.recipientprofile.RecipientGender
+import java.util.Properties
 
 
 trait TFuelAgent extends TCommon {
 
-  def fuelAgent(dao : IRecipientInfoDAO) = {
+  def fuelAgent(dao : IRecipientInfoDAO, prop:Properties) = {
     val driver = new SmartWebDriver(new FirefoxDriver());
-    login(driver);
-    grabIndepthFriends(driver, dao, 0, 2, Set());
+    login(driver,prop);
+    val grabDepth =  prop.getProperty("grabdepth").toInt;
+    grabIndepthFriends(driver, dao, 0, grabDepth, Set());
     //grabFirstLevelFriends(driver, dao, 0);
     System.out.println("Now you have " + dao.countRecipients() + " customers in total");
     dao.save();

@@ -10,12 +10,13 @@ import com.netmessenger.agent.agentkaixin.datastore.IRecipientInfoDAO
 import com.netmessenger.agent.agentkaixin.datastore.RecipientInfo
 import com.netmessenger.agent.agentkaixin.datastore.RecipientInfoDAO
 import com.netmessenger.agent.base.LiteWebDriver
+import java.util.Properties
 
 trait TDeliverMessage extends TCommon{
 
-  def deliverMessage(message: IMessage, dao: IRecipientInfoDAO): Unit = {
+  def deliverMessage(message: IMessage, dao: IRecipientInfoDAO, prop:Properties): Unit = {
     val driver = new LiteWebDriver(new FirefoxDriver());
-    login(driver);
+    login(driver,prop);
 
     val recipientList = dao.findAll();
     val selectedRecipients = selectRecipients(recipientList.toList);

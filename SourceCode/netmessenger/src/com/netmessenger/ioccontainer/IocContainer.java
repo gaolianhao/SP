@@ -26,7 +26,6 @@ public class IocContainer {
 			URL resource = Thread.currentThread().getContextClassLoader().getResource(filePath);
 //			URL resource = this.getClass().getResource(filePath);
 			String fullFilePath = resource.getFile();
-			System.out.println(fullFilePath);
 
 			return new FileInputStream(fullFilePath);
 		} catch (FileNotFoundException e) {

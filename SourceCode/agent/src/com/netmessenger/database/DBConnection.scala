@@ -16,6 +16,6 @@ object DBConnection {
 	}
 	
 	def getFileName() : String = {
-		Thread.currentThread().getContextClassLoader().getResource("netmessenger.db").getFile();
+		"database/netmessenger.db";
 	}
 }

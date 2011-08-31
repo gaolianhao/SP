@@ -5,15 +5,19 @@ import com.netmessenger.agent.base.TAgentSafeOperation
 import com.netmessenger.agent.base.LiteWebDriver
 import com.netmessenger.agent.base.TAgentSafeOperation
 import com.netmessenger.agent.base.LiteWebDriver
+import java.util.Properties
+
 
 trait TCommon extends TAgentSafeOperation {
   
-  def login(driver: LiteWebDriver): Unit = {
+  def login(driver: LiteWebDriver, prop:Properties): Unit = {
     val emailXPath = "//input[@name='email']"
     driver.goto("http://www.kaixin001.com/");
     driver.clear(emailXPath);
-    driver.input(emailXPath,"liano_x@sohu.com");
-    driver.input("//input[@name='password']", "19811011");
+    driver.input(emailXPath,prop.getProperty("username"));
+    driver.input("//input[@name='password']",prop.getProperty("password"));
     driver.click("//input[@id='btn_dl']");
   }
+  
+
 }

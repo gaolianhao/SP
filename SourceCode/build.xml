@@ -62,7 +62,7 @@
 			<fileset dir="${build-classes.dir}" />
 
 		</jar>
-		<mkdir dir="${build.dir}/data"/>
+		<mkdir dir="${build.dir}/database"/>
 		<mkdir dir="${build.dir}/config"/>
 		<copy todir="${build.dir}/config">
 			<fileset dir="${agent.project.dir}/config"/>
@@ -72,6 +72,7 @@
 			<fileset dir="${agent.project.dir}/config"/>
 			<fileset dir="${netmessenger.project.dir}/config"/>
 		</copy>
+
 	</target>
 
 	<target name="clean">
@@ -84,7 +85,7 @@
 	<!-- Run program -->
 
 	<target name="go-initdb">
-		<java classname="com.netmessenger.Main">
+		<java classname="com.netmessenger.Main"  dir="${build.dir}" fork="yes">
 			 <classpath>
 				<path refid="project.library"/>				
 				<pathelement location="${build.dir}/netmessenger.jar"/>
@@ -95,7 +96,7 @@
 	</target>
 
 	<target name="go-fuel">
-		<java classname="com.netmessenger.Main">
+		<java classname="com.netmessenger.Main" dir="${build.dir}" fork="yes" >
 			 <classpath>
 				<path refid="project.library"/>				
 				<pathelement location="${build.dir}/netmessenger.jar"/>
@@ -106,7 +107,7 @@
 	</target>
 
 	<target name="go-deliver">
-		<java classname="com.netmessenger.Main">
+		<java classname="com.netmessenger.Main"  dir="${build.dir}" fork="yes">
 			 <classpath>
 				<path refid="project.library"/>				
 				<pathelement location="${build.dir}/netmessenger.jar"/>
