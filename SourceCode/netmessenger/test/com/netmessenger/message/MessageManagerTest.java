@@ -18,7 +18,7 @@ public class MessageManagerTest {
 		Assert.assertEquals(RecipientAge.SENIOR, message.getRecipientAge());
 		Assert.assertEquals(RecipientJob.STUDENT, message.getRecipientJob());
 		Assert.assertEquals(RecipientGender.MALE, message.getRecipientGender());
-		Assert.assertEquals("Hello", message.GetContent());
+		Assert.assertEquals("Hello", message.getContent());
 	}
 
 }

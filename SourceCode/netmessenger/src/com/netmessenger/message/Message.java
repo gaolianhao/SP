@@ -21,7 +21,7 @@ public class Message implements IMessage {
 	}
 
 	@Override
-	public String GetContent() {
+	public String getContent() {
 
 		return this.content;
 	}

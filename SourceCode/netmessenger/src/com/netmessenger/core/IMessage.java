@@ -8,5 +8,5 @@ public interface IMessage {
 	RecipientAge getRecipientAge();
 	RecipientGender getRecipientGender();
 	RecipientJob getRecipientJob();
-	String GetContent();
+	String getContent();
 }
