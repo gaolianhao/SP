@@ -9,6 +9,7 @@ import com.netmessenger.database.DBConnection
 import com.netmessenger.agent.agentkaixin.datastore.RecipientInfoDBMaintance
 import java.sql.Connection
 import java.util.Properties
+import java.nio.charset.Charset
 
 class AgentKaixin extends Agent with TFuelAgent with TDeliverMessage {
  
@@ -35,6 +36,9 @@ class AgentKaixin extends Agent with TFuelAgent with TDeliverMessage {
   }
   
   def properties: Properties = {
+    var charset = Charset.defaultCharset();
+    logger.info("JVM charset : " + charset.name());
+    
     val prop = new Properties();
     prop.load(this.getClass().getClassLoader().getResourceAsStream("agent_kaixin.properties"));
     

@@ -15,6 +15,8 @@ trait TFuelAgent extends TCommon {
     val grabDepth =  prop.getProperty("grabdepth").toInt;
     val startUrl = prop.getProperty("starturl");
     driver.goto(startUrl);
+    counter.number = 0;
+    
     grabIndepthFriends(driver, dao, 0, grabDepth, Set());
     //grabFirstLevelFriends(driver, dao, 0);
     System.out.println("Now you have " + dao.countRecipients() + " customers in total");
@@ -63,9 +65,9 @@ trait TFuelAgent extends TCommon {
       var urlList = friendList.map((ele) => {ele.getAttribute("href")});
       urlList = urlList.distinct;
       logger.info("found friends : " + urlList.size);
+      
       for (i <- 0 until urlList.size) {
-        
-        logger.info("\njump to " + urlList(i));
+        logger.info("jump to " + urlList(i));
         driver.goto(urlList(i));
         grabIndepthFriends(driver, dao, currentDepth + 1, maxDepth, newStackSet);
       }
@@ -90,6 +92,7 @@ trait TFuelAgent extends TCommon {
   
   private def saveCurrentPageRecipientInfo(driver: SmartWebDriver, dao: IRecipientInfoDAO): Unit = {
     tryDo(() => {
+      
       //save current recipient
       val name = driver.tryGetText(Array(
           "//div[@id='divstate0']//strong",
@@ -104,10 +107,14 @@ trait TFuelAgent extends TCommon {
       recipientInfo.name = name;
       recipientInfo.gender = parseGender(gender);
       recipientInfo.homePage = driver.currentUrl;
-      dao.add(recipientInfo);
+      
+      if(!dao.isExist(recipientInfo)){
+    	  dao.add(recipientInfo);
+      }
       
       var logger = Logger.getLogger(this.getClass().getName());
-      logger.info("got recipient info : " + name);
+      counter.number = counter.number + 1;
+      logger.info(counter.number + " got recipient info : " + name);
     }); 
   }
 }

@@ -23,6 +23,9 @@ trait TCommon extends TAgentSafeOperation {
   override def logger : Logger = {
     Logger.getLogger(this.getClass().getName());
   }
-  
 
+}
+
+object counter{
+  var number = 0;
 }

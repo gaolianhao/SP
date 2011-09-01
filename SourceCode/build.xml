@@ -104,6 +104,7 @@
 				<pathelement path="${build.dir}/config"/>
 			 </classpath>			
 			<arg value="fuel"/>
+			<jvmarg value="-Dfile.encoding=utf8"/>
 		</java>
 	</target>
 
