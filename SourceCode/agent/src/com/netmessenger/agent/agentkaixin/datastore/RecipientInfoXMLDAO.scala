@@ -48,8 +48,11 @@ class RecipientInfoXMLDAO extends IRecipientInfoDAO{
 		map.put(recipientInfo.homePage, recipientInfo);
 	}
 	
-	def  findAll():List[RecipientInfo] = {
-		return recipientList;
+	def goThroughAll(func:(RecipientInfo) => Unit):Int = {
+		for(i<-0 until recipientList.size()){
+		  func(recipientList.get(i));
+		}
+	  return recipientList.size();
 	}
 	
 	def  save() : Unit={

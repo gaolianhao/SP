@@ -30,6 +30,7 @@
 		<fileset dir="${basedir}/library/selenium-2.5.0" includes="*.jar"/>
 		<fileset dir="${basedir}/library/selenium-2.5.0/libs" includes="*.jar"/>
 		<fileset dir="${basedir}/library/sqlite/" includes="*.jar"/>
+		<fileset dir="${basedir}/library/log4j/" includes="*.jar"/>
 	</path>
 	
 	<path id="project.classpath">

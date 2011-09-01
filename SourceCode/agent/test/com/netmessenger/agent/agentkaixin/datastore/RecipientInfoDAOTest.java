@@ -32,14 +32,9 @@ public class RecipientInfoDAOTest {
 		recipientInfo.homePage_$eq("http://homepage");
 		dao.add(recipientInfo);
 
-		List<RecipientInfo> list = dao.findAll();
-		Assert.assertEquals(1, list.size());
+		
+		Assert.assertEquals(1, dao.countRecipients());
 
-		RecipientInfo targetRecipientInfo = list.get(0);
-		Assert.assertEquals(RecipientAge.SENIOR, targetRecipientInfo.age());
-		Assert.assertEquals(RecipientJob.STUDENT, targetRecipientInfo.job());
-		Assert.assertEquals(RecipientGender.FEMALE, targetRecipientInfo.gender());
-		Assert.assertEquals("name", targetRecipientInfo.name());
 
 	}
 
@@ -68,8 +63,7 @@ public class RecipientInfoDAOTest {
 		recipientInfo2.homePage_$eq("http://homepage2");
 		dao.add(recipientInfo2);
 
-		List<RecipientInfo> list = dao.findAll();
-		Assert.assertEquals(2, list.size());
+		Assert.assertEquals(2, dao.countRecipients());
 	}
 
 	@Test

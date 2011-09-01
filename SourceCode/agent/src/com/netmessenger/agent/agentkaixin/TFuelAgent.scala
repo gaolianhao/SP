@@ -5,7 +5,7 @@ import com.netmessenger.agent.agentkaixin.datastore.RecipientInfo
 import com.netmessenger.agent.base.SmartWebDriver
 import com.netmessenger.core.recipientprofile.RecipientGender
 import java.util.Properties
-
+import org.apache.log4j.Logger
 
 trait TFuelAgent extends TCommon {
 
@@ -43,7 +43,6 @@ trait TFuelAgent extends TCommon {
 
   private def grabIndepthFriends(driver: SmartWebDriver, dao: IRecipientInfoDAO, currentDepth: Int, maxDepth: Int, stackSet : Set[String]): Unit = {
     safelyRetriableDo(driver, () => {
-      
       //save current status
       val currentUrl = driver.currentUrl;
       
@@ -63,9 +62,10 @@ trait TFuelAgent extends TCommon {
       var friendList = driver.findElements(friendsXPath);
       var urlList = friendList.map((ele) => {ele.getAttribute("href")});
       urlList = urlList.distinct;
-      println("found friends : " + urlList.size);
+      logger.info("found friends : " + urlList.size);
       for (i <- 0 until urlList.size) {
-        println("\njump to " + urlList(i));
+        
+        logger.info("\njump to " + urlList(i));
         driver.goto(urlList(i));
         grabIndepthFriends(driver, dao, currentDepth + 1, maxDepth, newStackSet);
       }
@@ -105,7 +105,9 @@ trait TFuelAgent extends TCommon {
       recipientInfo.gender = parseGender(gender);
       recipientInfo.homePage = driver.currentUrl;
       dao.add(recipientInfo);
-      println("got recipient info : " + name);
+      
+      var logger = Logger.getLogger(this.getClass().getName());
+      logger.info("got recipient info : " + name);
     }); 
   }
 }

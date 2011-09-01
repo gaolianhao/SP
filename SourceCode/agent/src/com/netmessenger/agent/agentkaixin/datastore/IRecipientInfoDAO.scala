@@ -11,7 +11,7 @@ import java.util.List;
 
 	def countRecipients():Int;
 
-	def findAll():List[RecipientInfo] ;
+	def goThroughAll(func:(RecipientInfo) => Unit):Int;
 	
 	def save():Unit;
 	

@@ -6,6 +6,7 @@ import com.netmessenger.agent.base.LiteWebDriver
 import com.netmessenger.agent.base.TAgentSafeOperation
 import com.netmessenger.agent.base.LiteWebDriver
 import java.util.Properties
+import org.apache.log4j.Logger
 
 
 trait TCommon extends TAgentSafeOperation {
@@ -17,6 +18,10 @@ trait TCommon extends TAgentSafeOperation {
     driver.input(emailXPath,prop.getProperty("username"));
     driver.input("//input[@name='password']",prop.getProperty("password"));
     driver.click("//input[@id='btn_dl']");
+  }
+  
+  override def logger : Logger = {
+    Logger.getLogger(this.getClass().getName());
   }
   
 

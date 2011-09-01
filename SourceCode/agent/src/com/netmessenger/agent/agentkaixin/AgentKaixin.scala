@@ -38,12 +38,12 @@ class AgentKaixin extends Agent with TFuelAgent with TDeliverMessage {
     val prop = new Properties();
     prop.load(this.getClass().getClassLoader().getResourceAsStream("agent_kaixin.properties"));
     
-    println("------------propertes loaded");
+    logger.info("------------propertes loaded");
     var it = prop.stringPropertyNames().iterator()
     while(it.hasNext())
     {
       var key = it.next();
-      println(key + ":" + prop.getProperty(key));
+      logger.info(key + ":" + prop.getProperty(key));
     }
     
     return prop;

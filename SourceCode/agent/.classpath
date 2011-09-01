@@ -8,5 +8,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SeleniumLib"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/netmessenger"/>
 	<classpathentry kind="lib" path="/Users/twer/Projects/SP/SourceCode/library/sqlite/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="/Users/twer/Projects/SP/SourceCode/library/log4j/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

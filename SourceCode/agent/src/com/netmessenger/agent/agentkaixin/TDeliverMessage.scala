@@ -18,11 +18,10 @@ trait TDeliverMessage extends TCommon{
     val driver = new LiteWebDriver(new FirefoxDriver());
     login(driver,prop);
 
-    val recipientList = dao.findAll();
-    val selectedRecipients = selectRecipients(recipientList.toList);
-    recipientList.foreach(recipientInfo => {
+    val num = dao.goThroughAll((recipientInfo)=>{
       sendMessage(driver, recipientInfo, message);
     });
+    logger.info("prepare send message to " + num + " people");
 
     driver.quit();
   }
@@ -31,13 +30,10 @@ trait TDeliverMessage extends TCommon{
     println("prepare send message to " + recipientList.size + " people");
     return recipientList
   }
-  private def findRecipients(dao: RecipientInfoDAO): List[RecipientInfo] = {
-    return dao.findAll().toList;
-  }
   
   private def sendMessage(driver: LiteWebDriver,recipientInfo:RecipientInfo, message: IMessage): Unit = {
     safelyRetriableDo(driver, () => {
-      println("send message to " + recipientInfo.name);
+      logger.info("send message to " + recipientInfo.name);
       
       driver.goto(recipientInfo.homePage);
       driver.click("//a[text()='发短消息']");

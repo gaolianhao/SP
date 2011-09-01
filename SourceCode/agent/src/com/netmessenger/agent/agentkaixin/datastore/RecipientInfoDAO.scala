@@ -61,12 +61,12 @@ class RecipientInfoDAO(conn : Connection) extends IRecipientInfoDAO{
 		}
 	}
 	
-	override def findAll():List[RecipientInfo] = {
+	override def goThroughAll(func:RecipientInfo => Unit):Int = {
 		try{
 		  val stat = conn.createStatement();
 			val rs = stat.executeQuery("select * from " + RecipientInfoDBMaintance.TABLENAME);
 			val list = new LinkedList[RecipientInfo]();
-			
+			var i = 0;
 			while(rs.next())
 			{
 				var ri = new RecipientInfo();
@@ -77,10 +77,11 @@ class RecipientInfoDAO(conn : Connection) extends IRecipientInfoDAO{
 				ri.gender = RecipientGender.parse(rs.getString("gender"));
 				ri.homePage = rs.getString("homepage");
 				
-				list.add(ri);
+				func(ri);
+				i = i+1;
 			}
 			rs.close();
-			return list;
+			return i;
 		} catch {
 		  case e: Exception => throw new RuntimeException(e);
 		}

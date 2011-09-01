@@ -1,4 +1,5 @@
 package com.netmessenger.agent.base
+import org.apache.log4j.Logger
 
 trait TAgentSafeOperation {
 
@@ -14,7 +15,7 @@ trait TAgentSafeOperation {
           
         }
         case e: Exception => {
-          e.printStackTrace();
+          logger.error(e);
           System.out.println("Retrying the " + i + " time");
         }
       }
@@ -30,9 +31,13 @@ trait TAgentSafeOperation {
     	return null;
       }
       case e: Exception => {
-        e.printStackTrace();
+        logger.error(e);
         return null;
       }
     }
+  }
+   
+  def logger : Logger = {
+    Logger.getLogger(this.getClass().getName());
   }
 }
