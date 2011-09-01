@@ -69,10 +69,6 @@
 			<fileset dir="${agent.project.dir}/config"/>
 			<fileset dir="${netmessenger.project.dir}/config"/>
 		</copy>
-		<copy todir="${build.dir}/config">
-			<fileset dir="${agent.project.dir}/config"/>
-			<fileset dir="${netmessenger.project.dir}/config"/>
-		</copy>
 
 	</target>
 
