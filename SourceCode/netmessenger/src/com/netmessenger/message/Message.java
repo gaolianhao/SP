@@ -11,12 +11,21 @@ public class Message implements IMessage {
 	private RecipientJob recipientJob;
 	private RecipientGender recipientGender;
 	private String content = null;
+	private Boolean autoDecor = false;
 	
 	public Message(RecipientAge recipientAge, RecipientJob recipientJob,
 			RecipientGender recipientGender, String content) {
 		this.recipientAge = recipientAge;
 		this.recipientGender = recipientGender;
 		this.recipientJob = recipientJob;
+		this.content = content;
+	}
+	public Message(RecipientAge recipientAge, RecipientJob recipientJob,
+			RecipientGender recipientGender, Boolean autoDecor, String content) {
+		this.recipientAge = recipientAge;
+		this.recipientGender = recipientGender;
+		this.recipientJob = recipientJob;
+		this.autoDecor = autoDecor;
 		this.content = content;
 	}
 
@@ -41,6 +50,12 @@ public class Message implements IMessage {
 	public RecipientJob getRecipientJob() {
 		
 		return this.recipientJob;
+	}
+
+	@Override
+	public Boolean autoDecor() {
+		// TODO Auto-generated method stub
+		return autoDecor;
 	}
 
 }

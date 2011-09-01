@@ -26,6 +26,6 @@ trait TCommon extends TAgentSafeOperation {
 
 }
 
-object counter{
+object Counter {
   var number = 0;
 }

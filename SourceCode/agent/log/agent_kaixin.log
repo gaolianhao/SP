@@ -4,14 +4,6 @@ INFO  [main] - starturl:http://www.kaixin001.com/home/306886.html
 INFO  [main] - password:19811011
 INFO  [main] - grabdepth:2
 INFO  [main] - username:liano_x@sohu.com
-INFO  [main] - 1 got recipient info : 孙维
-INFO  [main] - found friends : 24
-INFO  [main] - 
-jump to http://www.kaixin001.com/home/1713016.html
-INFO  [main] - 2 got recipient info : 李婷婷
-INFO  [main] - found friends : 24
-INFO  [main] - 
-jump to http://www.kaixin001.com/home/1202365.html
-INFO  [main] - 3 got recipient info : 王彬彬
-INFO  [main] - 
-jump to http://www.kaixin001.com/home/106494.html
+INFO  [main] - send message to 孙维
+INFO  [main] - send message to 苏姗
+INFO  [main] - message sent to 2 people

@@ -17,7 +17,8 @@ public class AgentKaixinTest {
 		Message message = new Message
 				(RecipientAge.ALL,
 				RecipientJob.ALL,
-				RecipientGender.ALL,
+				RecipientGender.FEMALE,
+				false,
 				"Hello");
 		agentKaixin001.deliverMessage(message);
 	}

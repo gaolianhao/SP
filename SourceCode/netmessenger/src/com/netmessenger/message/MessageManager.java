@@ -52,6 +52,7 @@ public class MessageManager implements IMessageManager {
 						RecipientAge.parse(attributes.getNamedItem("recipientage").getNodeValue()),
 						RecipientJob.parse(attributes.getNamedItem("recipientjob").getNodeValue()),
 						RecipientGender.parse(attributes.getNamedItem("recipientgender").getNodeValue()),
+						Boolean.parseBoolean(attributes.getNamedItem("autodecor").getNodeValue()),
 						node.getTextContent()
 						);
 				messages.add(message);

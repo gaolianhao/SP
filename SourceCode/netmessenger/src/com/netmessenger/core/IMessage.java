@@ -9,4 +9,5 @@ public interface IMessage {
 	RecipientGender getRecipientGender();
 	RecipientJob getRecipientJob();
 	String getContent();
+	Boolean autoDecor();
 }

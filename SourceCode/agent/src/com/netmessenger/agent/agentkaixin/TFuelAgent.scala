@@ -15,7 +15,7 @@ trait TFuelAgent extends TCommon {
     val grabDepth =  prop.getProperty("grabdepth").toInt;
     val startUrl = prop.getProperty("starturl");
     driver.goto(startUrl);
-    counter.number = 0;
+    Counter.number = 0;
     
     grabIndepthFriends(driver, dao, 0, grabDepth, Set());
     //grabFirstLevelFriends(driver, dao, 0);
@@ -113,8 +113,8 @@ trait TFuelAgent extends TCommon {
       }
       
       var logger = Logger.getLogger(this.getClass().getName());
-      counter.number = counter.number + 1;
-      logger.info(counter.number + " got recipient info : " + name);
+      Counter.number = Counter.number + 1;
+      logger.info(Counter.number + " got recipient info : " + name);
     }); 
   }
 }
