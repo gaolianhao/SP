@@ -65,8 +65,8 @@ public class RecipientInfoDAOTest {
 		recipientInfo2.age_$eq(RecipientAge.SENIOR);
 		recipientInfo2.job_$eq(RecipientJob.STUDENT);
 		recipientInfo2.gender_$eq(RecipientGender.FEMALE);
-		recipientInfo2.homePage_$eq("http://homepage");
-		dao.add(recipientInfo);
+		recipientInfo2.homePage_$eq("http://homepage2");
+		dao.add(recipientInfo2);
 
 		List<RecipientInfo> list = dao.findAll();
 		Assert.assertEquals(2, list.size());

@@ -13,6 +13,8 @@ trait TFuelAgent extends TCommon {
     val driver = new SmartWebDriver(new FirefoxDriver());
     login(driver,prop);
     val grabDepth =  prop.getProperty("grabdepth").toInt;
+    val startUrl = prop.getProperty("starturl");
+    driver.goto(startUrl);
     grabIndepthFriends(driver, dao, 0, grabDepth, Set());
     //grabFirstLevelFriends(driver, dao, 0);
     System.out.println("Now you have " + dao.countRecipients() + " customers in total");

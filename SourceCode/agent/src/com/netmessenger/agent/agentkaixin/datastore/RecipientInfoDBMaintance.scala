@@ -18,9 +18,12 @@ class RecipientInfoDBMaintance(conn: Connection) {
     try {
       val state = conn.createStatement();
       var tableStr =
-        "Create Table " + TABLENAME + "(name nvarchar(50)," + "age nvarchar(50)," + "gender nvarchar(10)," + "job nvarchar(50)," + "homepage nvarchar(300) );";
-
+        "Create Table " + TABLENAME + "(name nvarchar(50)," + "age nvarchar(50)," + "gender nvarchar(10)," + "job nvarchar(50)," + "homepage nvarchar(300) NOT NULL UNIQUE);";
+      
       state.executeUpdate(tableStr);
+      val createIndex = "CREATE UNIQUE INDEX index_homepage ON "+TABLENAME+" (homepage);"
+      state.executeUpdate(createIndex);
+      
     } catch {
       case e: Exception => throw new RuntimeException(e);
     }
