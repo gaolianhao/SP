@@ -1,3 +1,4 @@
 <agents>
-	<agent class="com.netmessenger.agent.agentkaixin.AgentKaixin"/>
+	<agent class="com.netmessenger.agent.agentkaixin.AgentKaixin" enabled="true"/>
+	<agent class="com.netmessenger.agent.renren.AgentRenren" enabled="true"/>
 </agents>

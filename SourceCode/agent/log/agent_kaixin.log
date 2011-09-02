@@ -1,9 +1,18 @@
 INFO  [main] - JVM charset : UTF-8
 INFO  [main] - ------------propertes loaded
-INFO  [main] - starturl:http://www.kaixin001.com/home/306886.html
+INFO  [main] - starturl:http://www.kaixin001.com/home/?uid=35112061
 INFO  [main] - password:19811011
-INFO  [main] - grabdepth:2
+INFO  [main] - grabdepth:1
 INFO  [main] - username:liano_x@sohu.com
-INFO  [main] - send message to 孙维
-INFO  [main] - send message to 苏姗
-INFO  [main] - message sent to 2 people
+INFO  [main] - 1 got recipient info : 王凯旋
+INFO  [main] - found friends : 5
+INFO  [main] - jump to http://www.kaixin001.com/home/83756478.html
+INFO  [main] - 2 got recipient info : 蒋竹
+INFO  [main] - jump to http://www.kaixin001.com/home/35085940.html
+INFO  [main] - 3 got recipient info : 俞佳
+INFO  [main] - jump to http://www.kaixin001.com/home/35418009.html
+INFO  [main] - 4 got recipient info : 王珊珊
+INFO  [main] - jump to http://www.kaixin001.com/home/35079783.html
+INFO  [main] - 5 got recipient info : 高飞
+INFO  [main] - jump to http://www.kaixin001.com/home/135670.html
+INFO  [main] - 6 got recipient info : 高连浩

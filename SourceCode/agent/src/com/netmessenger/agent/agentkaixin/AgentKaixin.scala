@@ -14,6 +14,7 @@ import java.nio.charset.Charset
 class AgentKaixin extends Agent with TFuelAgent with TDeliverMessage {
  
   override def fuelAgent() : Unit = {
+    logger.info("fuel agent kaixin");
     var con = DBConnection.getConnection();
     val dao = new RecipientInfoDAO(con).asInstanceOf[IRecipientInfoDAO];
     
@@ -22,6 +23,7 @@ class AgentKaixin extends Agent with TFuelAgent with TDeliverMessage {
   }
   
   override def deliverMessage(message : IMessage) : Unit = {
+    logger.info("agent kaixin deliver message");
     var con = DBConnection.getConnection();
     val dao = new RecipientInfoDAO(DBConnection.getConnection());
     this.deliverMessage(message,dao,this.properties);
@@ -29,6 +31,7 @@ class AgentKaixin extends Agent with TFuelAgent with TDeliverMessage {
   }
   
   override def prepareRunningEnvironment():Unit = {
+    logger.info("prepare agent kaixin emvironment");
     var con = DBConnection.getConnection();
     val dbm = new RecipientInfoDBMaintance(con);
     dbm.clearTable();

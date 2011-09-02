@@ -52,8 +52,10 @@ public class AgentManager implements IAgentManager {
 			for(int i=0;i< nodes.getLength();i++){
 				 Node node = nodes.item(i);
 				 NamedNodeMap attributes = node.getAttributes();
-				 IAgent agent = buildAgent(attributes);
-				 agents.add(agent);
+				 if(agentEnabled(attributes)){
+					 IAgent agent = buildAgent(attributes);
+					 agents.add(agent);
+				 }
 			}
 			return agents;
 		} catch (Exception e){
@@ -64,9 +66,13 @@ public class AgentManager implements IAgentManager {
 		}
 	}
 
-	private IAgent buildAgent( NamedNodeMap attributes) throws Exception{
+	private IAgent buildAgent( NamedNodeMap attributes) throws Exception {
 		
 		 String className = attributes.getNamedItem("class").getNodeValue();
 		return (IAgent)Class.forName(className).newInstance();
+	}
+	
+	private  Boolean agentEnabled(NamedNodeMap attributes) throws Exception{
+			return Boolean.parseBoolean(attributes.getNamedItem("enabled").getNodeValue());
 	}
 }

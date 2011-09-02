@@ -8,98 +8,59 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.firefox.FirefoxDriver
 import com.netmessenger.agent.base.LiteWebDriver
 import com.netmessenger.agent.base.Agent
+import com.netmessenger.database.DBConnection
+import com.netmessenger.agent.renren.datastore.RecipientInfoDBMaintance
+import java.util.Properties
+import java.nio.charset.Charset
 import com.netmessenger.core.IMessage
+import com.netmessenger.agent.renren.datastore.RecipientInfoDAO
+import com.netmessenger.agent.renren.datastore.IRecipientInfoDAO
 
-class AgentRenren extends Agent {
+class AgentRenren extends Agent  with TFuelAgent with TDeliverMessage{
 
   override def deliverMessage(message: IMessage) = {
-    val driver = new LiteWebDriver(new FirefoxDriver());
-    // step1
-    safelyRetriableDo(driver, () => { login(driver) });
-
-    // step2
-    val friendList = driver.findElements("//ul[@class='people-list']//span[@class='headpichold']/a");
-    var recipientNum = 0;
-    var friendListSize = friendList.size;
-    for (i <- 0 until friendListSize) {
-      var isSendout = safelyRetriableDo(driver, () => { sendMessageToOneRecipient(driver, i, message) }).asInstanceOf[Boolean];
-      if (isSendout) recipientNum = recipientNum + 1;
-    }
-
-    driver.quit();
-
+    logger.info("agent renren deliver message");
+    var con = DBConnection.getConnection();
+    val dao = new RecipientInfoDAO(DBConnection.getConnection());
+    this.deliverMessage(message,dao,this.properties);
+    con.close();
   }
 
   override def fuelAgent = {
-
+    logger.info("fuel agent renren");
+	var con = DBConnection.getConnection();
+    val dao = new RecipientInfoDAO(con).asInstanceOf[IRecipientInfoDAO];
+    
+    this.fuelAgent(dao,this.properties);
+    con.close();
   }
   
   override def prepareRunningEnvironment():Unit = {
-
+    logger.info("prepare agent renren emvironment");
+	var con = DBConnection.getConnection();
+    val dbm = new RecipientInfoDBMaintance(con);
+    dbm.clearTable();
+    dbm.createTable();
   }
   
-  def login(driver: LiteWebDriver): Unit = {
-    val emailXPath = "input[@id='email']"
-
-    driver.goto("http://www.renren.com/");
-    driver.clear(emailXPath);
-    driver.input(emailXPath, "gaolianhao@sohu.com");
-    driver.input("input[@id='password']", "19811011");
-    driver.click("input[@id='login']");
+  
+  def properties: Properties = {
+    var charset = Charset.defaultCharset();
+    logger.info("JVM charset : " + charset.name());
     
-    Thread.sleep(2000);
-  }
-
-  def sendMessageToOneRecipient(driver: LiteWebDriver, friendIndex: Int, message: IMessage): Boolean = {
-    driver.click("//div[@class='menu-title']/a[text()='首页']");
-
-    val friendList = driver.findElements("//ul[@class='people-list']//span[@class='headpichold']/a");
-    friendList(friendIndex).click();
-
-    var friendlyMessage = buildFriendlyMessage(driver, message);
-
-    driver.click("div[@id='proTabFeedId_']");
-
-    driver.input("//div[@class='m-editor-textarea']/textarea[@id='cmtbody']",friendlyMessage);
-
-    driver.click("//input[@id='whisper']");
-
-    driver.click("//input[@id='commentPostBtn']");
-
-    return true;
-  }
-
-  private def buildFriendlyMessage(driver: LiteWebDriver, message: IMessage): String = {
-    var gender = "";
-    var name = "";
-    try {
-      val gender = driver.getText("//ul[@class='user-info clearfix']/li[@class='gender']/span");
-    } catch {
-      case e: Exception => {
-        driver.click("input[@id='proTabInfoId_']");
-        Thread.sleep(1000);
-        try {
-          gender = driver.getText("//div[@id='basicInfo']//dl[@class='info']//dd[1]");
-        } catch {
-          case e: Exception => {}
-        }
-
-      }
+    val prop = new Properties();
+    prop.load(this.getClass().getClassLoader().getResourceAsStream("agent_renren.properties"));
+    
+    logger.info("------------propertes loaded");
+    var it = prop.stringPropertyNames().iterator()
+    while(it.hasNext())
+    {
+      var key = it.next();
+      logger.info(key + ":" + prop.getProperty(key));
     }
-
-    name = driver.getText("//h1[contains(@class,'username')]");
-
-    var callStr = "";
-    if ("男".equals(gender)) {
-      callStr = name + " 帅哥，";
-    } else if ("女".equals(gender)) {
-      callStr = name + " 美女，";
-    } else {
-      callStr = "Hello,";
-    }
-
-    return callStr + "\n\r" + message.getContent();
+    
+    return prop;
+    
   }
-
 }
 
