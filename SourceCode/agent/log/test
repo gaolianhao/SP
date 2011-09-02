@@ -1,6 +1,0 @@
-0     INFO  [main] agentkaixin.AgentKaixin - ------------propertes loaded
-4     INFO  [main] agentkaixin.AgentKaixin - starturl:http://www.kaixin001.com/home/306886.html
-4     INFO  [main] agentkaixin.AgentKaixin - password:19811011
-5     INFO  [main] agentkaixin.AgentKaixin - grabdepth:2
-5     INFO  [main] agentkaixin.AgentKaixin - username:liano_x@sohu.com
-10137 INFO  [main] agentkaixin.AgentKaixin - send message to 孙维
