@@ -24,6 +24,10 @@ class LiteWebDriver (driver : WebDriver) {
      return driver.findElement(By.xpath(xpath));
   }
   
+  def findById(id:String):WebElement = {
+	return driver.findElement(By.id(id));
+  }
+  
   def goto(url : String) : Unit = {
     driver.get(url);
     Thread.sleep(2000);

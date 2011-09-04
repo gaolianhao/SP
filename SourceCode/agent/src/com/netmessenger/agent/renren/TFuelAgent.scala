@@ -27,14 +27,14 @@ trait TFuelAgent extends TCommon {
     safelyRetriableDo(driver, () => {
       val currentUrl = driver.currentUrl;
 
-      var friendList = driver.findElements(friendsXPath);
+      var friendList = driver.tryFindElements(friendsXPath);
       for (i <- 0 until friendList.size) {
         driver.click(friendList(i));
 
         saveCurrentPageRecipientInfo(driver, dao);
         
         driver.goto(currentUrl);
-        friendList = driver.findElements(friendsXPath);
+        friendList = driver.tryFindElements(friendsXPath);
       }
 
     });
@@ -52,7 +52,11 @@ trait TFuelAgent extends TCommon {
       if (currentDepth >= maxDepth) return ;
       
       //loop friends of current recipient
-      var friendList = driver.findElements(friendsXPath);
+      var friendList = driver.tryFindElements(friendsXPath);
+      
+      logger.info("found friends : " + friendList.size);
+      
+      
       var urlList = friendList.map((ele) => {ele.getAttribute("href")});
       urlList = urlList.distinct;
       logger.info("found friends : " + urlList.size);
@@ -108,7 +112,7 @@ trait TFuelAgent extends TCommon {
     }); 
   }
   
-  private def friendsXPath: java.lang.String = {
-    "//ul[@class='people-list']//a"
+  private def friendsXPath: Array[String]= {
+    return Array("//ul[@class='people-list']//a","//div[@id='allFrdGallery']//a[@class='avatar']");
   }
 }

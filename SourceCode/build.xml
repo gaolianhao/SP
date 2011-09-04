@@ -112,6 +112,7 @@
 				<pathelement path="${build.dir}/config"/>
 			 </classpath>			
 			<arg value="deliver"/>
+			<jvmarg value="-Dfile.encoding=utf8"/>
 		</java>
 	</target>
 

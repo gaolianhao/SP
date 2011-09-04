@@ -14,8 +14,9 @@ class SmartWebDriver(driver : WebDriver) extends LiteWebDriver(driver) with TAge
   
   def tryFindElements(xpaths : Array[String]) : List[WebElement] = {
     xpaths.foreach(xpath => {
+    	println(xpath);
     	val result = tryDo(()=>this.findElements(xpath)).asInstanceOf[List[WebElement]];
-    	if(result != null) return result;
+    	if(result != null && result.size !=0 ) return result;
     });
     throw new Exception("elements [" + xpaths.toString() + "] can't be find on path : " + this.currentUrl);
   }

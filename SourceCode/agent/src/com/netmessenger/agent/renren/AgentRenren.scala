@@ -20,6 +20,7 @@ class AgentRenren extends Agent  with TFuelAgent with TDeliverMessage{
 
   override def deliverMessage(message: IMessage) = {
     logger.info("agent renren deliver message");
+    logger.info(message.getContent());
     var con = DBConnection.getConnection();
     val dao = new RecipientInfoDAO(DBConnection.getConnection());
     this.deliverMessage(message,dao,this.properties);
